@@ -1,4 +1,4 @@
-package it.epicode.main.entity;
+package it.epicode.entity;
 
 
 

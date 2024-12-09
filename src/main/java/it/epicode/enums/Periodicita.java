@@ -1,4 +1,4 @@
-package it.epicode.classi;
+package it.epicode.enums;
 
 public enum Periodicita {
     SETTIMANALE,

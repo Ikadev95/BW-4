@@ -1,6 +1,6 @@
 package it.epicode.entity;
 
-import it.epicode.classi.Periodicita;
+import it.epicode.enums.Periodicita;
 import jakarta.persistence.*;
 import lombok.Data;
 
