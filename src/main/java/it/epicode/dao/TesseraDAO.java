@@ -6,42 +6,42 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 
 @AllArgsConstructor
-public class UtenteDAO {
+public class TesseraDAO {
     private EntityManager em;
 
-    public void save(Utente oggetto) {
+    public void saveTessera(Tessera oggetto, Utente utente) {
         em.getTransaction().begin();
+        oggetto.setClienteId(utente);
+        oggetto.setDataEmissione(LocalDate.now());
+        oggetto.setDataScadenza(LocalDate.now().plusYears(1));
         em.persist(oggetto);
         em.getTransaction().commit();
-        TesseraDAO tesseraDAO = new TesseraDAO(em);
-        Tessera tessera = new Tessera();
-        tesseraDAO.saveTessera(tessera,oggetto);
     }
 
-    public Utente findById(Long id) {
-        return em.find(Utente.class, id);
+    public Tessera findById(Long id) {
+        return em.find(Tessera.class, id);
     }
 
-    public List<Utente> findAll() {
-        return em.createNamedQuery("Trova_tutto_Utente", Utente.class).getResultList();
+    public List<Tessera> findAll() {
+        return em.createNamedQuery("Trova_tutto_Tessera", Tessera.class).getResultList();
     }
 
-    public void update(Utente oggetto) {
+    public void update(Tessera oggetto) {
         em.getTransaction().begin();
         em.merge(oggetto);
         em.getTransaction().commit();
     }
 
-    public void delete(Utente oggetto) {
+    public void delete(Tessera oggetto) {
         em.getTransaction().begin();
         em.remove(oggetto);
         em.getTransaction().commit();
     }
-
-
 
 
 }
