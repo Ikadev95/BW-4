@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -19,6 +21,7 @@ public class Mezzo {
 
     @Column(name = "capienza", nullable = false)
     private int capienza;
+
 
     @Column(name = "in_servizio", nullable = false)
     private boolean inServizio;
@@ -35,6 +38,8 @@ public class Mezzo {
     @Column(name = "data_fine", nullable = false)
     private LocalDate dataFine;
 
+    @OneToMany(mappedBy = "mezzo", orphanRemoval = true)
+    private Set<Tratta> viaggiPerTratta = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "mezzo", cascade = CascadeType.ALL)
     private List<Biglietto> biglietti;

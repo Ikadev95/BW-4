@@ -28,4 +28,8 @@ public class Tratta {
     @OneToMany(mappedBy = "tratta", orphanRemoval = true)
     private Set<PreSet> preSets = new LinkedHashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "mezzo_id")
+    private Mezzo mezzo;
+
 }

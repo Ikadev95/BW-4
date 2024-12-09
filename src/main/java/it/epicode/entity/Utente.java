@@ -1,5 +1,6 @@
 package it.epicode.entity;
 
+import it.epicode.enums.TipoDiRuolo;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -25,6 +26,13 @@ public class Utente {
     @Column(name = "cognome", nullable = false, length = 50)
     private String cognome;
 
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "tessera_id")
+    private Tessera tessera;
+
+    @Enumerated
+    @Column(name = "tipo_di_ruolo")
+    private TipoDiRuolo tipoDiRuolo;
 
 
 
