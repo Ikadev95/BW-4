@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -17,5 +18,7 @@ public class Biglietto extends PreSet{
 
     @Column(name = "validita")
     private Boolean validita;
+
+
 
 }

@@ -26,7 +26,7 @@ public class Tessera {
     @OneToOne
     @JoinColumn(name = "cliente_id", nullable = false)
     private Utente clienteId;
-
+    
     @OneToMany(mappedBy = "tessera")
     private List<Abbonamento> listaAbbonamenti;
 

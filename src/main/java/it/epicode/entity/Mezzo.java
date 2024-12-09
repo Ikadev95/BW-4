@@ -44,6 +44,14 @@ public class Mezzo {
     @OneToMany(mappedBy = "mezzo", cascade = CascadeType.ALL)
     private List<Biglietto> biglietti;
 
-
-
+    @Override
+    public String toString() {
+        return "Mezzo: " +
+                "stato=" + stato +
+                ", tipo=" + tipo +
+                ", inServizio=" + inServizio +
+                ", capienza=" + capienza +
+                ", id=" + id +
+                ' ';
+    }
 }
