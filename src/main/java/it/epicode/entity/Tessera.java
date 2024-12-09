@@ -8,6 +8,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,21 +29,21 @@ public class Tessera {
 
     @ElementCollection
     @CollectionTable(name = "abbonamenti", joinColumns = @JoinColumn(name = "tessera_id"))
-    @Column(name = "lista_abbonamento")
-    private List<Long> listaAbbonamento;
+    @Column(name = "lista_abbonamenti")
+    private List<Long> listaAbbonamenti;
 
     @ElementCollection
     @CollectionTable(name = "biglietti", joinColumns = @JoinColumn(name = "tessera_id"))
-    @Column(name = "lista_biglietto")
-    private List<Long> listaBiglietto;
+    @Column(name = "lista_biglietti")
+    private List<Long> listaBiglietti;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "data_emissione", nullable = false)
-    private Date dataEmissione;
+    private LocalDate dataEmissione;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "data_scadenza", nullable = false)
-    private Date dataScadenza;
+    private LocalDate dataScadenza;
 
 
     public Tessera() {
@@ -57,8 +59,8 @@ public class Tessera {
         return "Tessera{" +
                 "id=" + id +
                 ", utenteId=" + clienteId +
-                ", listaAbbonamento=" + listaAbbonamento +
-                ", listaBiglietto=" + listaBiglietto +
+                ", listaAbbonamento=" + listaAbbonamenti +
+                ", listaBiglietto=" + listaBiglietti +
                 ", dataEmissione=" + dataEmissione +
                 ", dataScadenza=" + dataScadenza +
                 '}';
