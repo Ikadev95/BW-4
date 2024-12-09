@@ -3,7 +3,6 @@ import it.epicode.dao.AbbonamentoDAO;
 import it.epicode.dao.BigliettoDAO;
 import it.epicode.dao.PreSetDAO;
 import it.epicode.dao.UtenteDAO;
-import it.epicode.entity.Cliente;
 import it.epicode.entity.Utente;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -28,7 +27,7 @@ public class MainCreate {
         List<Long> idTessere = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
-            Cliente utente = new Cliente();
+            Utente utente = new Utente();
             utente.setNome(faker.name().fullName());
             utente.setCognome(faker.name().lastName());
             utente.setTessera((long) faker.number().numberBetween(1, 100));
