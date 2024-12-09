@@ -23,7 +23,7 @@ public class Tessera {
 
     @OneToOne
     @JoinColumn(name = "cliente_id", nullable = false)
-    private Cliente clienteId;
+    private Utente clienteId;
 
     @ElementCollection
     @CollectionTable(name = "abbonamenti", joinColumns = @JoinColumn(name = "tessera_id"))
