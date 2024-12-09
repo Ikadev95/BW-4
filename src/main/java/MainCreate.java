@@ -54,14 +54,12 @@ public class MainCreate {
             abbonamento.setTessera(u.getTessera());
             abbonamentoDAO.save(abbonamento);
 
-
             for (int i = 0; i < faker.number().numberBetween(1, 5); i++) {
                 Biglietto biglietto = new Biglietto();
                 biglietto.setDataEmissione(LocalDate.now());
                 biglietto.setDataScadenza(LocalDate.now().plusDays(faker.number().numberBetween(1, 30)));
                 biglietto.setValidita(faker.bool().bool());
                 biglietto.setTessera(u.getTessera());
-                bigliettoDAO.save(biglietto);
                 bigliettoDAO.save(biglietto);
             }
         }

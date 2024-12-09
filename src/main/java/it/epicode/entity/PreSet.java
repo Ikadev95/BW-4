@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public abstract class PreSet  {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private  Long id;
+    private Long id;
 
     @Getter
     @Setter
