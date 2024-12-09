@@ -8,8 +8,6 @@ import lombok.Setter;
 
 @Data
 @Entity
-@Inheritance (strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn (name ="tipo_user", discriminatorType = DiscriminatorType.STRING)
 public class Utente {
 
     @Id
@@ -26,8 +24,7 @@ public class Utente {
     @Column(name = "cognome", nullable = false, length = 50)
     private String cognome;
 
-    @OneToOne(orphanRemoval = true)
-    @JoinColumn(name = "tessera_id")
+    @OneToOne(mappedBy = "clienteId", cascade = CascadeType.ALL)
     private Tessera tessera;
 
     @Enumerated
