@@ -8,9 +8,9 @@
             <!-- Configurazione del database e del server-->
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/trasporti"/>
             <!-- user del db-->
-            <property name="javax.persistence.jdbc.user" value="postgres"/>
+            <property name="javax.persistence.jdbc.user" value="trasporti"/>
             <!-- password del db-->
-            <property name="javax.persistence.jdbc.password" value="asemota91"/>
+            <property name="javax.persistence.jdbc.password" value="123"/>
 
 
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
