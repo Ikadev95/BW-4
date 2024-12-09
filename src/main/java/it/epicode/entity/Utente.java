@@ -28,7 +28,7 @@ public class Utente {
 
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "tessera_id")
-    private Long tessera;
+    private Tessera tessera;
 
     @Enumerated
     @Column(name = "tipo_di_ruolo")

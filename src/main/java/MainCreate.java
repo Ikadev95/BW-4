@@ -30,7 +30,7 @@ public class MainCreate {
             Utente utente = new Utente();
             utente.setNome(faker.name().fullName());
             utente.setCognome(faker.name().lastName());
-            utente.setTessera((long) faker.number().numberBetween(1, 100));
+          
 
 
         }
