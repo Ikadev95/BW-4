@@ -19,6 +19,8 @@ public class MainUpdate {
     static EntityManagerFactory emf = Persistence.createEntityManagerFactory("unit-jpa");
     static EntityManager em = emf.createEntityManager();
     static MezzoDAO mezzoDAO = new MezzoDAO(em);
+    static BigliettoDAO bigliettoDAO = new BigliettoDAO(em);
+    static AbbonamentoDAO abbonamentoDAO = new AbbonamentoDAO(em);
     static TrattaDAO trattaDAO = new TrattaDAO(em);
     static PuntoEmissioneDAO puntoEmissioneDAO = new PuntoEmissioneDAO(em);
 
@@ -35,9 +37,10 @@ public class MainUpdate {
         Utente utenteCorrente = utenteDAO.findById(id);
         utenteCor = utenteCorrente;
 
+            boolean continua = true;
+
         if (utenteCorrente.getTipoDiRuolo() != TipoDiRuolo.AMMINISTRATORE) {
 
-            boolean continua = true;
 
             while (continua) {
                 stampaMenuCli();
@@ -52,7 +55,7 @@ public class MainUpdate {
                         creaAbbonamento();
                         break;
                     case 3:
-
+                        verificaAbbonamento();
                         break;
                     case 4:
                         visulizzaTuttiMezzi();
@@ -83,7 +86,6 @@ public class MainUpdate {
 
         } else {
 
-            boolean continua = true;
 
             while (continua) {
                 stampaMenuAmm();
@@ -98,7 +100,7 @@ public class MainUpdate {
                         creaAbbonamento();
                         break;
                     case 3:
-
+                        verificaAbbonamento();
                         break;
                     case 4:
                         visulizzaTuttiMezzi();
@@ -176,19 +178,19 @@ public class MainUpdate {
             Biglietto biglietto = new Biglietto();
 
 //          Selezione punto vendita
-            System.out.println("inserisci id punto di emissione tra quelli disponibili:");
+            System.out.println("inserisci ID punto di emissione tra quelli disponibili:");
             System.out.println(puntoEmissioneDAO.findAll());
             Long idPunto = scanner.nextLong();
             biglietto.setPuntoEmissione(puntoEmissioneDAO.findById(idPunto));
 
 //          Selezione mezzo
-            System.out.println("inverisci id mezzo tra quelli disponibili:");
+            System.out.println("inverisci ID mezzo tra quelli disponibili:");
             visulizzaTuttiMezzi();
             Long idMezzo = scanner.nextLong();
             biglietto.setMezzo(mezzoDAO.findById(idMezzo));
 
 //          Selezione tratta
-            System.out.println("inverisci id tratta tra quelli disponibili:");
+            System.out.println("inverisci ID tratta tra quelli disponibili:");
             System.out.println(trattaDAO.findAll());
             Long idtratta = scanner.nextLong();
             biglietto.setTratta(trattaDAO.findById(idtratta));
@@ -200,7 +202,7 @@ public class MainUpdate {
 
             biglietto.setValidita(true);
 
-            BigliettoDAO bigliettoDAO = new BigliettoDAO(em);
+
             bigliettoDAO.save(biglietto);
 
 
@@ -211,19 +213,19 @@ public class MainUpdate {
         Abbonamento abbonamento = new Abbonamento();
 
 //          Selezione punto vendita
-        System.out.println("inserisci id punto di emissione tra quelli disponibili:");
+        System.out.println("inserisci ID punto di emissione tra quelli disponibili:");
         System.out.println(puntoEmissioneDAO.findAll());
         Long idPunto = scanner.nextLong();
         abbonamento.setPuntoEmissione(puntoEmissioneDAO.findById(idPunto));
 
 //          Selezione mezzo
-        System.out.println("inverisci id mezzo tra quelli disponibili:");
+        System.out.println("inverisci ID mezzo tra quelli disponibili:");
         visulizzaTuttiMezzi();
         Long idMezzo = scanner.nextLong();
         abbonamento.setMezzo(mezzoDAO.findById(idMezzo));
 
 //          Selezione tratta
-        System.out.println("inverisci id tratta tra quelli disponibili:");
+        System.out.println("inverisci ID tratta tra quelli disponibili:");
         System.out.println(trattaDAO.findAll());
         Long idtratta = scanner.nextLong();
         abbonamento.setTratta(trattaDAO.findById(idtratta));
@@ -246,7 +248,7 @@ public class MainUpdate {
             abbonamento.setDataScadenza(LocalDate.now().plusYears(1));
         }
 
-        AbbonamentoDAO abbonamentoDAO = new AbbonamentoDAO(em);
+
         abbonamentoDAO.save(abbonamento);
 
         em.merge(utenteCor.getTessera().getListaAbbonamenti().add(abbonamento));
@@ -262,5 +264,16 @@ public class MainUpdate {
 
         public static void visulizzaTuttiPuntiVendita() {
             System.out.println(puntoEmissioneDAO.findAll());
+        }
+
+        public static void verificaAbbonamento() {
+            System.out.println("inserici ID abbonamento");
+            Abbonamento abbDaVerifica = abbonamentoDAO.findById(scanner.nextLong());
+            if (LocalDate.now().isAfter(abbDaVerifica.getDataScadenza())) {
+                System.out.println("l'abbonamento è scaduto");
+            } else {
+                System.out.println("abbonamento ancora in corso di validita");
+            }
+
         }
 }
