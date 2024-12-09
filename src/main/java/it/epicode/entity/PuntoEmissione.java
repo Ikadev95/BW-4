@@ -27,4 +27,13 @@ public class PuntoEmissione {
 
      @OneToMany(mappedBy = "puntoEmissione", cascade = CascadeType.ALL)
      private List<Abbonamento> abbonamenti;
+
+    @Override
+    public String toString() {
+        return "PuntoEmissione :" +
+                "id=" + id +
+                ", disponibile=" + disponibile +
+                ", tipo=" + tipo +
+                ' ';
+    }
 }

@@ -30,12 +30,12 @@ public class Tessera {
     @ElementCollection
     @CollectionTable(name = "abbonamenti", joinColumns = @JoinColumn(name = "tessera_id"))
     @Column(name = "lista_abbonamenti")
-    private List<Long> listaAbbonamenti;
+    private List<Abbonamento> listaAbbonamenti;
 
     @ElementCollection
     @CollectionTable(name = "biglietti", joinColumns = @JoinColumn(name = "tessera_id"))
     @Column(name = "lista_biglietti")
-    private List<Long> listaBiglietti;
+    private List<Biglietto> listaBiglietti;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "data_emissione", nullable = false)
@@ -48,9 +48,6 @@ public class Tessera {
 
     public Tessera() {
     }
-
-
-
 
 
 

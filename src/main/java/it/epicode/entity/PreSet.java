@@ -21,8 +21,6 @@ public class PreSet  {
     @Column(name = "data_emissione")
     private LocalDate dataEmissione;
 
-    @Column(name = "data_scadenza")
-    private LocalDate dataScadenza;
 
     @ManyToOne
     @JoinColumn(name = "punto_emissione")
