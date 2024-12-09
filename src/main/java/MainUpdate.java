@@ -25,6 +25,50 @@ public class MainUpdate {
 
         if (utenteDAO.findById(id).getTipoDiRuolo() != TipoDiRuolo.AMMINISTRATORE) {
 
+            boolean continua = true;
+
+            while (continua) {
+                stampaMenuCli();
+                System.out.println("inserisci input: ");
+                int scelta = scanner.nextInt();
+
+                switch (scelta) {
+                    case 1:
+
+                        break;
+                    case 2:
+
+                        break;
+                    case 3:
+
+                        break;
+                    case 4:
+
+                        break;
+                    case 5:
+
+                        break;
+                    case 6:
+
+                        break;
+                    case 7:
+
+                        break;
+                    case 8:
+
+                        break;
+                    case 9:
+
+                        break;
+                    case 0:
+                        continua = false;
+                        System.out.println("Uscita dal programma. Arrivederci!");
+                        break;
+                    default:
+                        System.out.println("Scelta non valida. Riprova.");
+                }
+            }
+
         } else {
 
             boolean continua = true;
@@ -82,6 +126,7 @@ public class MainUpdate {
 
 
     }
+
         public static void stampaMenuAmm() {
             System.out.println("\n--- Menu Catalogo ---");
             System.out.println("1. Acquista biglietto");
@@ -100,6 +145,19 @@ public class MainUpdate {
 
             System.out.println("0. Esci");
         }
+
+    public static void stampaMenuCli() {
+        System.out.println("\n--- Menu Catalogo ---");
+        System.out.println("1. Acquista biglietto");
+        System.out.println("2. Acquista abbonamento");
+        System.out.println("3. Verifica abbonamento");
+        System.out.println("4. Visualizza mezzi");
+        System.out.println("5. Visualizza tratte");
+        System.out.println("7. Rinnovo tessera");
+        System.out.println("8. Visualizza biglietti attivi");
+        System.out.println("9. Visualizza biglietti scaduti");
+        System.out.println("0. Esci");
+    }
 
 
 
