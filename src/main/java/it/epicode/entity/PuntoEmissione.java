@@ -1,7 +1,10 @@
 package it.epicode.entity;
 
+import it.epicode.enums.TipoPuntoEmissione;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -18,15 +21,10 @@ public class PuntoEmissione {
     @Enumerated(EnumType.STRING)
     private TipoPuntoEmissione tipo;
 
-    public enum TipoPuntoEmissione {
-        DISTRIBUTORE_AUTOMATICO,
-        RIVENDITORE_AUTORIZZATO
-    }
 
+     @OneToMany(mappedBy = "puntoEmissione", cascade = CascadeType.ALL)
+     private List<Biglietto> biglietti;
 
-    // @OneToMany(mappedBy = "puntoEmissione", cascade = CascadeType.ALL)
-    // private List<Biglietto> biglietti;
-
-    // @OneToMany(mappedBy = "puntoEmissione", cascade = CascadeType.ALL)
-    // private List<Abbonamento> abbonamenti;
+     @OneToMany(mappedBy = "puntoEmissione", cascade = CascadeType.ALL)
+     private List<Abbonamento> abbonamenti;
 }

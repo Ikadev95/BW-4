@@ -1,7 +1,12 @@
 package it.epicode.entity;
 
+import it.epicode.enums.StatoMezzo;
+import it.epicode.enums.TipoMezzo;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Data
@@ -24,20 +29,16 @@ public class Mezzo {
     @Enumerated(EnumType.STRING)
     private StatoMezzo stato;
 
-    public enum TipoMezzo {
-        AUTOBUS,
-        TRAM
-    }
+    @Column(name = "data_inizio", nullable = false)
+    private LocalDate dataInizio;
 
-    public enum StatoMezzo {
-        IN_SERVIZIO,
-        IN_MANUTENZIONE
-    }
-
-   // @OneToMany(mappedBy = "mezzo", cascade = CascadeType.ALL)
-   // private List<Biglietto> biglietti;
+    @Column(name = "data_fine", nullable = false)
+    private LocalDate dataFine;
 
 
-   // @OneToMany(mappedBy = "mezzo", cascade = CascadeType.ALL)
-   // private List<TrattaPercorsa> trattePercorse;
+    @OneToMany(mappedBy = "mezzo", cascade = CascadeType.ALL)
+    private List<Biglietto> biglietti;
+
+
+
 }

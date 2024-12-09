@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
 @Data
 @Entity
 public class Cliente extends Utente {
@@ -13,11 +15,11 @@ public class Cliente extends Utente {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private  Long id;
 
-    @Setter
-    @Getter
-    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
-    private Long tessera;
 
+
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "tessera_id")
+    private Tessera tessera;
 
 
 }

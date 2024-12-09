@@ -1,11 +1,11 @@
 package it.epicode.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -25,6 +25,7 @@ public class Tratta {
     @Column(name = "durata", nullable = false, length = 50)
     private String durata;
 
-    // @OneToMany(mappedBy = "tratta", cascade = CascadeType.ALL)
-    // private List<TrattaPercorsa> trattePercorse;
+    @OneToMany(mappedBy = "tratta", orphanRemoval = true)
+    private Set<PreSet> preSets = new LinkedHashSet<>();
+
 }
