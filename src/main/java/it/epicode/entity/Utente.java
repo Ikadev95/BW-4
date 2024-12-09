@@ -28,10 +28,12 @@ public class Utente {
 
     @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "tessera_id")
-    private Tessera tessera;
+    private Long tessera;
 
     @Enumerated
     @Column(name = "tipo_di_ruolo")
     private TipoDiRuolo tipoDiRuolo;
+
+
 
 }
