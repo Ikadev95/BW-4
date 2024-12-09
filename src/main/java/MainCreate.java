@@ -4,12 +4,11 @@ import it.epicode.dao.BigliettoDAO;
 import it.epicode.dao.PreSetDAO;
 import it.epicode.dao.UtenteDAO;
 import it.epicode.entity.Utente;
+import it.epicode.enums.TipoDiRuolo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 public class MainCreate {
@@ -24,16 +23,16 @@ public class MainCreate {
         UtenteDAO utenteDAO = new UtenteDAO(em);
 
 
-        List<Long> idTessere = new ArrayList<>();
-
         for (int i = 0; i < 5; i++) {
             Utente utente = new Utente();
             utente.setNome(faker.name().fullName());
             utente.setCognome(faker.name().lastName());
-          
-
-
+            utente.setTipoDiRuolo(TipoDiRuolo.CLIENTE);
+            utenteDAO.save(utente);
         }
+
+
+
 
 
 
