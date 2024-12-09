@@ -8,6 +8,7 @@ import lombok.Setter;
 
 @Data
 @Entity
+@NamedQuery(name = "Trova_tutto_Utente", query = "SELECT u FROM Utente u")
 public class Utente {
 
     @Id

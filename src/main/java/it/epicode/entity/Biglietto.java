@@ -5,11 +5,14 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
+
 @Setter
+@Getter
 @Data
 @Entity
 @NamedQuery(name = "Trova_tutto_Biglietto", query = "SELECT a FROM Biglietto a")
+@DiscriminatorValue("BIGLIETTO")
+
 public class Biglietto extends PreSet{
 
     @Column(name = "validita")

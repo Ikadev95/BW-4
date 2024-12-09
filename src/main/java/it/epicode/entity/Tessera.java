@@ -27,15 +27,11 @@ public class Tessera {
     @JoinColumn(name = "cliente_id", nullable = false)
     private Utente clienteId;
 
-    @ElementCollection
-    @CollectionTable(name = "abbonamenti", joinColumns = @JoinColumn(name = "tessera_id"))
-    @Column(name = "lista_abbonamenti")
-    private List<Long> listaAbbonamenti;
+    @OneToMany(mappedBy = "tessera")
+    private List<Abbonamento> listaAbbonamenti;
 
-    @ElementCollection
-    @CollectionTable(name = "biglietti", joinColumns = @JoinColumn(name = "tessera_id"))
-    @Column(name = "lista_biglietti")
-    private List<Long> listaBiglietti;
+    @OneToMany(mappedBy = "tessera")
+    private List<Biglietto> listaBiglietti;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "data_emissione", nullable = false)
@@ -48,9 +44,6 @@ public class Tessera {
 
     public Tessera() {
     }
-
-
-
 
 
 
