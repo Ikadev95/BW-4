@@ -68,9 +68,13 @@ public class MainCreate {
             puntoEmissioneDAO.save(puntoEmissione);
 
         }
-        
+
         List<Utente> utenti = utenteDAO.findAll();
 
+
+        List<PuntoEmissione> puntiEmissione = puntoEmissioneDAO.findAll();
+        List<Mezzo> mezzi = mezzoDAO.findAll();
+        List<Tratta> tratte = trattaDAO.findAll();
 
         for (Utente u : utenti) {
             Abbonamento abbonamento = new Abbonamento();
@@ -78,6 +82,11 @@ public class MainCreate {
             abbonamento.setDataScadenza(LocalDate.now().plusMonths(faker.number().numberBetween(1, 12)));
             abbonamento.setPeriodicita(faker.options().option(Periodicita.class));
             abbonamento.setTessera(u.getTessera());
+
+            if (!puntiEmissione.isEmpty()) {
+                abbonamento.setPuntoEmissione(faker.options().nextElement(puntiEmissione));
+            }
+
             abbonamentoDAO.save(abbonamento);
 
             for (int i = 0; i < faker.number().numberBetween(1, 5); i++) {
@@ -85,9 +94,23 @@ public class MainCreate {
                 biglietto.setDataEmissione(LocalDate.now());
                 biglietto.setValidita(faker.bool().bool());
                 biglietto.setTessera(u.getTessera());
+
+                if (!mezzi.isEmpty()) {
+                    biglietto.setMezzo(faker.options().nextElement(mezzi));
+                }
+
+                if (!tratte.isEmpty()) {
+                    biglietto.setTratta(faker.options().nextElement(tratte));
+                }
+
+                if (!puntiEmissione.isEmpty()) {
+                    biglietto.setPuntoEmissione(faker.options().nextElement(puntiEmissione));
+                }
+
                 bigliettoDAO.save(biglietto);
             }
         }
+
 
         em.close();
 
