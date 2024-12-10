@@ -13,7 +13,7 @@ import java.time.LocalDate;
 
 public class Abbonamento extends PreSet {
 
-    @Enumerated
+    @Enumerated (EnumType.STRING)
     @Column(name = "periodicita")
     private Periodicita periodicita;
 

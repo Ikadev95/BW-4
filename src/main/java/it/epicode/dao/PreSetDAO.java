@@ -1,5 +1,6 @@
 package it.epicode.dao;
 
+import it.epicode.entity.Mezzo;
 import it.epicode.entity.PreSet;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
@@ -36,6 +37,11 @@ public class PreSetDAO {
         em.remove(oggetto);
         em.getTransaction().commit();
     }
+
+    public List<PreSet> getOrderedByMezzo() {
+        return em.createNamedQuery("Grouped_by_mezzo", PreSet.class).getResultList();
+    }
+
 
 
 }

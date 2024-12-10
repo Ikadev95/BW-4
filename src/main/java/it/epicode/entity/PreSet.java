@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Inheritance (strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "tipo_biglietto", discriminatorType = DiscriminatorType.STRING)
 @NamedQuery(name="Trova_tutto_PreSet ", query="SELECT a FROM PreSet  a")
+@NamedQuery(name = "Grouped_by_mezzo", query = "SELECT a FROM PreSet a ORDER BY a.mezzo")
 
 public abstract class PreSet  {
     @Id
