@@ -12,7 +12,7 @@
             <!-- password del db-->
 
 
-            <property name="jakarta.persistence.jdbc.password" value=""/>
+            <property name="jakarta.persistence.jdbc.password" value="fede"/>
 
 
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>

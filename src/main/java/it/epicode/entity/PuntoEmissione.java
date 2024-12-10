@@ -17,8 +17,8 @@ public class PuntoEmissione {
     @Column(name = "id")
     private Long id;
 
-    @Enumerated
-    @Column(name = "disponibiler")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "disponibile")
     private StatoMezzo disponibile;
 
 
