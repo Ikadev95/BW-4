@@ -9,6 +9,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -378,6 +379,34 @@ public class MainUpdate {
         tesseraDAO.update(tessera);
 
         System.out.println("Tessera rinnovata con successo! Nuova data di scadenza: " + tessera.getDataScadenza());
+    }
+
+    public static void visualizzaPerPeriodo() {
+        System.out.println("Inserisci data di inizio: ");
+        LocalDate dataInizio = LocalDate.parse(scanner.next());
+        System.out.println("Inserisci data di fine: ");
+        LocalDate dataFine = LocalDate.parse(scanner.next());
+
+        System.out.println("cosa vuoi visualizzare? (1.Biglietti, 2.Abbonamenti)");
+        int scelta = scanner.nextInt();
+
+        if (scelta == 1) {
+            List<Biglietto> biglietti = em.createQuery("SELECT b FROM Biglietto b WHERE b.dataEmissione BETWEEN :dataInizio AND :dataFine", Biglietto.class)
+                    .setParameter("dataInizio", dataInizio)
+                    .setParameter("dataFine", dataFine)
+                    .getResultList();
+            System.out.println("Biglietti trovati: ");
+            biglietti.forEach(System.out::println);
+        } else if (scelta==2) {
+            List<Abbonamento> abbonamenti = em.createQuery("SELECT a FROM Abbonamento a WHERE a.dataEmissione BETWEEN :dataInizio AND :dataFine", Abbonamento.class)
+                    .setParameter("dataInizio", dataInizio)
+                    .setParameter("dataFine", dataFine)
+                    .getResultList();
+            System.out.println("Abbonamenti trovati: ");
+            abbonamenti.forEach(System.out::println);
+        }else {
+            System.out.println("Scelta non valida.");
+        }
     }
 
 
