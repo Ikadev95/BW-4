@@ -2,6 +2,7 @@ import com.github.javafaker.Faker;
 import it.epicode.dao.*;
 import it.epicode.entity.*;
 import it.epicode.enums.Periodicita;
+import it.epicode.enums.StatoMezzo;
 import it.epicode.enums.TipoDiRuolo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -68,7 +69,7 @@ public class MainUpdate {
                         visulizzaTuttiPuntiVendita();
                         break;
                     case 7:
-
+                        rinnovoTessera();
                         break;
                     case 8:
                         trovaBigliettiAttivi();
@@ -113,10 +114,10 @@ public class MainUpdate {
                         visulizzaTuttiPuntiVendita();
                         break;
                     case 7:
-
+                        controlloMezzo();
                         break;
                     case 8:
-
+                        rinnovoTessera();
                         break;
                     case 9:
                         trovaBigliettiAttivi();
@@ -290,6 +291,7 @@ public class MainUpdate {
 
         }
 
+
         public static void trovaBigliettiAttivi (){
         if(bigliettoDAO.findActive() != null){
             System.out.println(bigliettoDAO.findActive());
@@ -301,4 +303,82 @@ public class MainUpdate {
         public static void trovaBigliettiScaduti (){
             System.out.println(bigliettoDAO.findExpired());
         }
+
+    public static void controlloMezzo() {
+        System.out.println("Inserisci l'ID del mezzo da controllare:");
+        Long idMezzo = scanner.nextLong();
+
+
+        Mezzo mezzo = mezzoDAO.findById(idMezzo);
+
+        if (mezzo == null) {
+            System.out.println("Errore: Nessun mezzo trovato con l'ID specificato.");
+            return;
+        }
+
+
+        System.out.println("Mezzo trovato:");
+        System.out.println(mezzo);
+        System.out.println("Stato attuale: " + mezzo.getStato());
+
+
+        System.out.println("Vuoi aggiornare lo stato del mezzo? (Sì: 1 / No: 0)");
+        int scelta = scanner.nextInt();
+
+        if (scelta == 1) {
+            System.out.println("Inserisci il nuovo stato del mezzo: (IN_SERVIZIO, FUORI_SERVIZIO, MANUTENZIONE)");
+            String nuovoStato = scanner.next().toUpperCase();
+
+            try {
+                StatoMezzo statoMezzo = StatoMezzo.valueOf(nuovoStato);
+                mezzo.setStato(statoMezzo);
+
+
+                mezzoDAO.update(mezzo);
+                System.out.println("Stato del mezzo aggiornato correttamente a: " + statoMezzo);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Errore: Stato non valido. Operazione annullata.");
+            }
+        } else {
+            System.out.println("Nessuna modifica apportata al mezzo.");
+        }
+    }
+
+    public static void rinnovoTessera() {
+        System.out.println("Inserisci l'ID della tessera da rinnovare:");
+        Long idTessera = scanner.nextLong();
+
+
+        Tessera tessera = tesseraDAO.findById(idTessera);
+
+        if (tessera == null) {
+            System.out.println("Errore: Nessuna tessera trovata con l'ID specificato.");
+            return;
+        }
+
+
+        System.out.println("Tessera trovata:");
+        System.out.println("Data di scadenza attuale: " + tessera.getDataScadenza());
+
+        if (tessera.getDataScadenza().isBefore(LocalDate.now())) {
+            System.out.println("La tessera è scaduta. È necessario rinnovarla. (Si: 1, No: 0 )");
+            int scelta = scanner.nextInt();
+        } else {
+            System.out.println("La tessera è ancora valida. Vuoi comunque rinnovarla? (Sì: 1 / No: 0)");
+            int scelta = scanner.nextInt();
+
+            if (scelta != 1) {
+                System.out.println("Operazione annullata.");
+                return;
+            }
+        }
+
+
+        tessera.setDataScadenza(LocalDate.now().plusYears(1));
+        tesseraDAO.update(tessera);
+
+        System.out.println("Tessera rinnovata con successo! Nuova data di scadenza: " + tessera.getDataScadenza());
+    }
+
+
 }
