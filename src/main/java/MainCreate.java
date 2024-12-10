@@ -40,7 +40,7 @@ public class MainCreate {
         utente.setTipoDiRuolo(TipoDiRuolo.AMMINISTRATORE);
         utenteDAO.save(utente);
 
-        List<Utente> utenti = utenteDAO.findAll();
+
 
 
         for (int i = 0; i < 5; i++) {
@@ -68,10 +68,11 @@ public class MainCreate {
             puntoEmissioneDAO.save(puntoEmissione);
 
         }
+        
+        List<Utente> utenti = utenteDAO.findAll();
+
 
         for (Utente u : utenti) {
-            System.out.println(u.getTessera().getId());
-
             Abbonamento abbonamento = new Abbonamento();
             abbonamento.setDataEmissione(LocalDate.now());
             abbonamento.setDataScadenza(LocalDate.now().plusMonths(faker.number().numberBetween(1, 12)));
@@ -82,7 +83,6 @@ public class MainCreate {
             for (int i = 0; i < faker.number().numberBetween(1, 5); i++) {
                 Biglietto biglietto = new Biglietto();
                 biglietto.setDataEmissione(LocalDate.now());
-                biglietto.setDataScadenza(LocalDate.now().plusDays(faker.number().numberBetween(1, 30)));
                 biglietto.setValidita(faker.bool().bool());
                 biglietto.setTessera(u.getTessera());
                 bigliettoDAO.save(biglietto);

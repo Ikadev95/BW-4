@@ -22,6 +22,8 @@ public class TesseraDAO {
         oggetto.setDataScadenza(LocalDate.now().plusYears(1));
         em.persist(oggetto);
         em.getTransaction().commit();
+        utente.setTessera(oggetto);
+        em.merge(utente);
     }
 
     public Tessera findById(Long id) {
@@ -45,15 +47,10 @@ public class TesseraDAO {
     }
 
 
-    public Tessera findByUtente(Long id) {
-        try {
-            return em.createQuery("SELECT t FROM Tessera t WHERE t.clienteId.id = :id", Tessera.class)
-                    .setParameter("id", id)
-                    .getSingleResult();
-        } catch (NoResultException e) {
-            System.out.println("Nessuna tessera trovata per l'utente con ID: " + id);
-            return null;
-        }
+    public Tessera findTesseraByUtenteId(Long utenteId) {
+        return em.createQuery("SELECT t FROM Tessera t WHERE t.clienteId.id = :utenteId", Tessera.class)
+                .setParameter("utenteId", utenteId)
+                .getSingleResult();
     }
 
 
