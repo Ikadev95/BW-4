@@ -326,7 +326,7 @@ public class MainUpdate {
         int scelta = scanner.nextInt();
 
         if (scelta == 1) {
-            System.out.println("Inserisci il nuovo stato del mezzo: (IN_SERVIZIO, FUORI_SERVIZIO, MANUTENZIONE)");
+            System.out.println("Inserisci il nuovo stato del mezzo: (IN_SERVIZIO, IN_MANUTENZIONE)");
             String nuovoStato = scanner.next().toUpperCase();
 
             try {
@@ -374,7 +374,7 @@ public class MainUpdate {
         }
 
 
-        tessera.setDataScadenza(LocalDate.now().plusYears(1));
+        tessera.setDataScadenza(LocalDate.now().plusYears(2));
         tesseraDAO.update(tessera);
 
         System.out.println("Tessera rinnovata con successo! Nuova data di scadenza: " + tessera.getDataScadenza());
