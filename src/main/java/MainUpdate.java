@@ -128,7 +128,7 @@ public class MainUpdate {
                         trovaBigliettiScaduti();
                         break;
                     case 11:
-
+                        visualizzaPerPeriodo();
                         break;
                     case 12:
                         visualizzaBiglAbbPerPuntoDiEmissione();
