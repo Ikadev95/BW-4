@@ -25,6 +25,7 @@ public class MainUpdate {
     static TrattaDAO trattaDAO = new TrattaDAO(em);
     static PuntoEmissioneDAO puntoEmissioneDAO = new PuntoEmissioneDAO(em);
     static TesseraDAO tesseraDAO = new TesseraDAO(em);
+    static PreSetDAO preSetDAO = new PreSetDAO(em);
 
     public static void main(String[] args) {
         Faker faker = new Faker(new Locale("it"));
@@ -129,7 +130,7 @@ public class MainUpdate {
 
                         break;
                     case 12:
-
+                        visualizzaBiglAbbPerPuntoDiEmissione();
                         break;
                     case 13:
 
@@ -378,6 +379,15 @@ public class MainUpdate {
         tesseraDAO.update(tessera);
 
         System.out.println("Tessera rinnovata con successo! Nuova data di scadenza: " + tessera.getDataScadenza());
+    }
+
+    public static void visualizzaBiglAbbPerPuntoDiEmissione() {
+
+        System.out.println("insersci ID del punto vendita");
+        visulizzaTuttiPuntiVendita();
+        int idPunto = scanner.nextInt();
+        System.out.println(preSetDAO.getPreSetbyPunto(idPunto));
+
     }
 
 

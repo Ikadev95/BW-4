@@ -50,13 +50,14 @@ public abstract class PreSet  {
 
     @Override
     public String toString() {
-        return "PreSet{" +
-                "id=" + id +
-                ", dataEmissione=" + dataEmissione +
-                ", puntoEmissione=" + puntoEmissione +
-                ", tratta=" + tratta +
-                ", mezzo=" + mezzo +
-                ", tessera=" + tessera +
+        return "PreSet {\n" +
+                "  id = " + id + ",\n" +
+                "  dataEmissione = " + dataEmissione + ",\n" +
+                "  puntoEmissione = " + puntoEmissione + ",\n" +
+                "  tratta = " + tratta + ",\n" +
+                "  mezzo = " + mezzo + ",\n" +
+                "  tessera = " + tessera + "\n" +
                 '}';
     }
+
 }
