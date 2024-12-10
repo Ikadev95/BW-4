@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -14,12 +15,21 @@ public class UtenteDAO {
 
     public void save(Utente oggetto) {
         em.getTransaction().begin();
-        em.persist(oggetto);
+        em.persist(oggetto); // Salva l'utente
         em.getTransaction().commit();
-        TesseraDAO tesseraDAO = new TesseraDAO(em);
+
         Tessera tessera = new Tessera();
-        tesseraDAO.saveTessera(tessera,oggetto);
+        tessera.setClienteId(oggetto); // Collega l'utente alla tessera
+        tessera.setDataEmissione(LocalDate.now());
+        tessera.setDataScadenza(LocalDate.now().plusYears(1));
+
+        em.getTransaction().begin();
+        em.persist(tessera); // Salva la tessera
+        oggetto.setTessera(tessera); // Aggiorna l'utente con la tessera
+        em.merge(oggetto); // Salva di nuovo l'utente con la relazione aggiornata
+        em.getTransaction().commit();
     }
+
 
     public Utente findById(Long id) {
         return em.find(Utente.class, id);

@@ -25,7 +25,7 @@ public class Utente {
     @Column(name = "cognome", nullable = false, length = 50)
     private String cognome;
 
-    @OneToOne(mappedBy = "clienteId", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "clienteId", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Tessera tessera;
 
     @Enumerated
