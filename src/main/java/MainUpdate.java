@@ -126,6 +126,12 @@ public class MainUpdate {
                     case 11:
 
                         break;
+                    case 12:
+
+                        break;
+                    case 13:
+
+                        break;
                     case 0:
                         continua = false;
                         System.out.println("Uscita dal programma. Arrivederci!");
@@ -148,13 +154,14 @@ public class MainUpdate {
             System.out.println("3. Verifica abbonamento");
             System.out.println("4. Visualizza mezzi");
             System.out.println("5. Visualizza tratte");
-            System.out.println("6. Controllo mezzo");
-            System.out.println("7. Rinnovo tessera");
-            System.out.println("8. Visualizza biglietti attivi");
-            System.out.println("9. Visualizza biglietti scaduti");
-            System.out.println("10. Visualizza biglietti,abbonamenti per un periodo");
-            System.out.println("11. Visualizza biglietti,abbonamenti per punto emissione");
-            System.out.println("11. Visualizza biglietti,abbonamenti per mezzo");
+            System.out.println("6. Visualizza punti vendita");
+            System.out.println("7. Controllo mezzo");
+            System.out.println("8. Rinnovo tessera");
+            System.out.println("9. Visualizza biglietti attivi");
+            System.out.println("10. Visualizza biglietti scaduti");
+            System.out.println("11. Visualizza biglietti,abbonamenti per un periodo");
+            System.out.println("12. Visualizza biglietti,abbonamenti per punto emissione");
+            System.out.println("13. Visualizza biglietti,abbonamenti per mezzo");
 
 
             System.out.println("0. Esci");
@@ -167,6 +174,7 @@ public class MainUpdate {
             System.out.println("3. Verifica abbonamento");
             System.out.println("4. Visualizza mezzi");
             System.out.println("5. Visualizza tratte");
+            System.out.println("6. Visualizza punti vendita");
             System.out.println("7. Rinnovo tessera");
             System.out.println("8. Visualizza biglietti attivi");
             System.out.println("9. Visualizza biglietti scaduti");
