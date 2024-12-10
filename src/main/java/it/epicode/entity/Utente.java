@@ -25,7 +25,8 @@ public class Utente {
     @Column(name = "cognome", nullable = false, length = 50)
     private String cognome;
 
-    @OneToOne(mappedBy = "clienteId", cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "tessera_id")
     private Tessera tessera;
 
     @Enumerated
@@ -38,7 +39,6 @@ public class Utente {
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", cognome='" + cognome + '\'' +
-                ", tessera=" + tessera.getId() +
                 ", tipoDiRuolo=" + tipoDiRuolo +
                 '}';
     }

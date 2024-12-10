@@ -248,7 +248,7 @@ public class MainUpdate {
 
 //      Selezione periodicita
         System.out.println("Inserisci periodicità: SETTIMANALE, MENSILE, SEMESTRALE");
-        Periodicita periodicita = Periodicita.valueOf(scanner.nextLine().toUpperCase());
+        Periodicita periodicita = Periodicita.valueOf(scanner.next().toUpperCase());
         abbonamento.setPeriodicita(periodicita);
 
         if (periodicita == Periodicita.SETTIMANALE) {

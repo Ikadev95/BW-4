@@ -23,10 +23,6 @@ public abstract class PreSet  {
     @Column(name = "data_emissione")
     private LocalDate dataEmissione;
 
-    @Getter
-    @Setter
-    @Column(name = "data_scadenza")
-    private LocalDate dataScadenza;
 
     @Getter
     @Setter
