@@ -55,6 +55,7 @@ public class MainCreate {
             tratta.setDurata(faker.number().numberBetween(12,344));
             tratta.setArrivo(faker.country().capital());
             tratta.setPartenza(faker.country().capital());
+            tratta.setMezzo(mezzo);
 
             trattaDAO.save(tratta);
 

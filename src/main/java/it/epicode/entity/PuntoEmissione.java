@@ -19,7 +19,8 @@ public class PuntoEmissione {
 
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "disponibiler")
+    @Column(name = "disponibile")
+
     private StatoMezzo disponibile;
 
 
