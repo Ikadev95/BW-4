@@ -12,6 +12,8 @@ import java.time.LocalDate;
 @Data
 @Entity
 @NamedQuery(name = "Trova_tutto_Biglietto", query = "SELECT a FROM Biglietto a")
+@NamedQuery(name = "Trova_attivi", query = "SELECT a FROM Biglietto a WHERE a.validita = true")
+@NamedQuery(name = "Trova_scaduti", query = "SELECT a FROM Biglietto a WHERE a.validita = false")
 @DiscriminatorValue("BIGLIETTO")
 
 public class Biglietto extends PreSet{
@@ -19,6 +21,11 @@ public class Biglietto extends PreSet{
     @Column(name = "validita")
     private Boolean validita;
 
-
-
+    @Override
+    public String toString() {
+        return "Biglietto{" +
+                "validita=" + validita +
+                '}';
+    }
 }
+

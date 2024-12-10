@@ -41,8 +41,6 @@ public class MainCreate {
         utenteDAO.save(utente);
 
 
-
-
         for (int i = 0; i < 5; i++) {
             Mezzo mezzo = new Mezzo();
             mezzo.setTipo(faker.options().option(TipoMezzo.class));

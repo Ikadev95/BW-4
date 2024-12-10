@@ -48,4 +48,15 @@ public abstract class PreSet  {
     @JoinColumn(name = "tessera_id")
     private Tessera tessera;
 
+    @Override
+    public String toString() {
+        return "PreSet{" +
+                "id=" + id +
+                ", dataEmissione=" + dataEmissione +
+                ", puntoEmissione=" + puntoEmissione +
+                ", tratta=" + tratta +
+                ", mezzo=" + mezzo +
+                ", tessera=" + tessera +
+                '}';
+    }
 }

@@ -37,5 +37,16 @@ public class BigliettoDAO {
         em.getTransaction().commit();
     }
 
+    public List<Biglietto> findActive() {
+        List<Biglietto> result = em.createNamedQuery("Trova_attivi", Biglietto.class).getResultList();
+        return result;
+    }
+
+    public List<Biglietto> findExpired() {
+        List<Biglietto> result = em.createNamedQuery("Trova_scaduti", Biglietto.class).getResultList();
+        return result;
+    }
+
+
 
 }

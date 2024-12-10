@@ -71,10 +71,10 @@ public class MainUpdate {
 
                         break;
                     case 8:
-
+                        trovaBigliettiAttivi();
                         break;
                     case 9:
-
+                        trovaBigliettiScaduti();
                         break;
                     case 0:
                         continua = false;
@@ -119,10 +119,10 @@ public class MainUpdate {
 
                         break;
                     case 9:
-
+                        trovaBigliettiAttivi();
                         break;
                     case 10:
-
+                        trovaBigliettiScaduti();
                         break;
                     case 11:
 
@@ -288,5 +288,17 @@ public class MainUpdate {
                 System.out.println("abbonamento ancora in corso di validita");
             }
 
+        }
+
+        public static void trovaBigliettiAttivi (){
+        if(bigliettoDAO.findActive() != null){
+            System.out.println(bigliettoDAO.findActive());
+        }
+        else System.out.println("nulla");
+
+        }
+
+        public static void trovaBigliettiScaduti (){
+            System.out.println(bigliettoDAO.findExpired());
         }
 }
