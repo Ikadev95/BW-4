@@ -4,6 +4,7 @@ import it.epicode.entity.Tessera;
 import it.epicode.entity.Utente;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import lombok.AllArgsConstructor;
 
 import java.time.LocalDate;
@@ -41,6 +42,18 @@ public class TesseraDAO {
         em.getTransaction().begin();
         em.remove(oggetto);
         em.getTransaction().commit();
+    }
+
+
+    public Tessera findByUtente(Long id) {
+        try {
+            return em.createQuery("SELECT t FROM Tessera t WHERE t.clienteId.id = :id", Tessera.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            System.out.println("Nessuna tessera trovata per l'utente con ID: " + id);
+            return null;
+        }
     }
 
 

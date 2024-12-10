@@ -23,6 +23,7 @@ public class MainUpdate {
     static AbbonamentoDAO abbonamentoDAO = new AbbonamentoDAO(em);
     static TrattaDAO trattaDAO = new TrattaDAO(em);
     static PuntoEmissioneDAO puntoEmissioneDAO = new PuntoEmissioneDAO(em);
+    static TesseraDAO tesseraDAO = new TesseraDAO(em);
 
     public static void main(String[] args) {
         Faker faker = new Faker(new Locale("it"));
@@ -213,8 +214,10 @@ public class MainUpdate {
 
             bigliettoDAO.save(biglietto);
 
+            Tessera tesseraCor = utenteCor.getTessera();
+            tesseraCor.getListaBiglietti().add(biglietto);
 
-            em.merge(utenteCor.getTessera().getListaBiglietti().add(biglietto));
+            em.merge(tesseraCor);
         }
 
     public static void creaAbbonamento() {
@@ -259,7 +262,9 @@ public class MainUpdate {
 
         abbonamentoDAO.save(abbonamento);
 
-        em.merge(utenteCor.getTessera().getListaAbbonamenti().add(abbonamento));
+        Tessera tesseraCor = utenteCor.getTessera();
+        tesseraCor.getListaAbbonamenti().add(abbonamento);
+        em.merge(tesseraCor);
     }
 
         public static void visulizzaTuttiMezzi() {

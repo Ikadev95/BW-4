@@ -12,6 +12,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@NamedQuery( name = "Trova_tutto_Mezzo" , query = "SELECT p FROM Mezzo p")
 public class Mezzo {
 
     @Id
@@ -22,9 +23,6 @@ public class Mezzo {
     @Column(name = "capienza", nullable = false)
     private int capienza;
 
-
-    @Column(name = "in_servizio", nullable = false)
-    private boolean inServizio;
 
     @Enumerated(EnumType.STRING)
     private TipoMezzo tipo;
@@ -49,7 +47,6 @@ public class Mezzo {
         return "Mezzo: " +
                 "stato=" + stato +
                 ", tipo=" + tipo +
-                ", inServizio=" + inServizio +
                 ", capienza=" + capienza +
                 ", id=" + id +
                 ' ';

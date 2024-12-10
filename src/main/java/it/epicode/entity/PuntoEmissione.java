@@ -1,5 +1,6 @@
 package it.epicode.entity;
 
+import it.epicode.enums.StatoMezzo;
 import it.epicode.enums.TipoPuntoEmissione;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,6 +9,7 @@ import java.util.List;
 
 @Entity
 @Data
+@NamedQuery( name = "Trova_tutto_PuntoEmissione" , query = "SELECT p FROM PuntoEmissione p")
 public class PuntoEmissione {
 
     @Id
@@ -15,8 +17,10 @@ public class PuntoEmissione {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "disponibile", nullable = false)
-    private boolean disponibile;
+    @Enumerated
+    @Column(name = "disponibiler")
+    private StatoMezzo disponibile;
+
 
     @Enumerated(EnumType.STRING)
     private TipoPuntoEmissione tipo;

@@ -9,6 +9,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@NamedQuery( name = "Trova_tutto_Tratta" , query = "SELECT p FROM Tratta p")
 public class Tratta {
 
     @Id
@@ -23,7 +24,7 @@ public class Tratta {
     private String arrivo;
 
     @Column(name = "durata", nullable = false, length = 50)
-    private String durata;
+    private int durata;
 
     @OneToMany(mappedBy = "tratta", orphanRemoval = true)
     private Set<PreSet> preSets = new LinkedHashSet<>();

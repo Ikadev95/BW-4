@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
 @Data
 @Entity
 @NamedQuery(name = "Trova_tutto_Utente", query = "SELECT u FROM Utente u")
@@ -15,13 +17,11 @@ public class Utente {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private  Long id;
 
-    @Getter
-    @Setter
+
     @Column(name = "nome", nullable = false, length = 50)
     private String nome;
 
-    @Getter
-    @Setter
+
     @Column(name = "cognome", nullable = false, length = 50)
     private String cognome;
 
@@ -32,6 +32,14 @@ public class Utente {
     @Column(name = "tipo_di_ruolo")
     private TipoDiRuolo tipoDiRuolo;
 
-
-
+    @Override
+    public String toString() {
+        return "Utente{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", cognome='" + cognome + '\'' +
+                ", tessera=" + tessera.getId() +
+                ", tipoDiRuolo=" + tipoDiRuolo +
+                '}';
+    }
 }
