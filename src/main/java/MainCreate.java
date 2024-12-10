@@ -86,6 +86,11 @@ public class MainCreate {
                 abbonamento.setPuntoEmissione(faker.options().nextElement(puntiEmissione));
             }
 
+            if (!mezzi.isEmpty()) {
+                Mezzo mezzo = faker.options().nextElement(mezzi);
+                abbonamento.setMezzo(mezzo);
+            }
+
             abbonamentoDAO.save(abbonamento);
 
             for (int i = 0; i < faker.number().numberBetween(1, 5); i++) {

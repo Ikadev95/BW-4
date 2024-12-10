@@ -9,6 +9,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -25,6 +26,7 @@ public class MainUpdate {
     static TrattaDAO trattaDAO = new TrattaDAO(em);
     static PuntoEmissioneDAO puntoEmissioneDAO = new PuntoEmissioneDAO(em);
     static TesseraDAO tesseraDAO = new TesseraDAO(em);
+    static PreSetDAO preSetDAO = new PreSetDAO(em);
 
     public static void main(String[] args) {
         Faker faker = new Faker(new Locale("it"));
@@ -132,7 +134,7 @@ public class MainUpdate {
 
                         break;
                     case 13:
-
+                        groupedByMezzo();
                         break;
                     case 0:
                         continua = false;
@@ -379,6 +381,24 @@ public class MainUpdate {
 
         System.out.println("Tessera rinnovata con successo! Nuova data di scadenza: " + tessera.getDataScadenza());
     }
+
+    public static void groupedByMezzo() {
+        List<PreSet> presets = preSetDAO.getOrderedByMezzo();
+        System.out.println("Raggruppamento per Mezzo:");
+
+        Mezzo currentMezzo = null;
+        for (PreSet preset : presets) {
+            if (preset.getMezzo() == null) {
+                System.out.println("Mezzo non specificato:");
+            } else if (!preset.getMezzo().equals(currentMezzo)) {
+                currentMezzo = preset.getMezzo();
+                System.out.println("Mezzo: " + currentMezzo.getTipo() + " " + currentMezzo.getId());
+            }
+            System.out.println("  - PreSet: " + preset.getId() + ", Tessera utente: " + preset.getTessera());
+        }
+
+
+}
 
 
 }
