@@ -30,7 +30,7 @@ public class Utente {
 
     private Tessera tessera;
 
-    @Enumerated
+    @Enumerated (EnumType.STRING)
     @Column(name = "tipo_di_ruolo")
     private TipoDiRuolo tipoDiRuolo;
 
