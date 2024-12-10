@@ -2,6 +2,7 @@ package it.epicode.dao;
 
 import it.epicode.entity.Mezzo;
 import it.epicode.entity.PreSet;
+import it.epicode.entity.PuntoEmissione;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
@@ -38,10 +39,18 @@ public class PreSetDAO {
         em.getTransaction().commit();
     }
 
+
     public List<PreSet> getOrderedByMezzo() {
         return em.createNamedQuery("Grouped_by_mezzo", PreSet.class).getResultList();
     }
 
+
+
+    public List<PreSet> getPreSetbyPunto(int id) {
+        return em.createQuery("SELECT p FROM PreSet p WHERE p.puntoEmissione.id = :puntoEm", PreSet.class)
+                .setParameter("puntoEm", id)
+                .getResultList();
+    }
 
 
 }

@@ -131,7 +131,7 @@ public class MainUpdate {
 
                         break;
                     case 12:
-
+                        visualizzaBiglAbbPerPuntoDiEmissione();
                         break;
                     case 13:
                         groupedByMezzo();
@@ -380,6 +380,15 @@ public class MainUpdate {
         tesseraDAO.update(tessera);
 
         System.out.println("Tessera rinnovata con successo! Nuova data di scadenza: " + tessera.getDataScadenza());
+    }
+
+    public static void visualizzaBiglAbbPerPuntoDiEmissione() {
+
+        System.out.println("insersci ID del punto vendita");
+        visulizzaTuttiPuntiVendita();
+        int idPunto = scanner.nextInt();
+        System.out.println(preSetDAO.getPreSetbyPunto(idPunto));
+
     }
 
 
