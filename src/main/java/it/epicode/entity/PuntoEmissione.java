@@ -36,11 +36,9 @@ public class PuntoEmissione {
 
     @Override
     public String toString() {
-        return "PuntoEmissione {\n" +
-                "  id = " + id + ",\n" +
-                "  disponibile = " + disponibile + ",\n" +
-                "  tipo = " + tipo + "\n" +
-                '}';
+        return "ID= " + id +
+                "  disponibile= " + disponibile +
+                "  tipo= " + tipo ;
     }
 
 }

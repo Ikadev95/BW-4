@@ -37,5 +37,11 @@ public class TrattaDAO {
         em.getTransaction().commit();
     }
 
+    public Tratta getTrattaByName(String name) {
+        return em.createQuery("SELECT t FROM Tratta t WHERE t.nome = :nome", Tratta.class)
+                .setParameter("nome", name )
+                .getSingleResult();
+    }
+
 
 }

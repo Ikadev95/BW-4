@@ -138,6 +138,12 @@ public class MainUpdate {
                     case 13:
                         groupedByMezzo();
                         break;
+                    case 14:
+                        creaTratta();
+                        break;
+                    case 15:
+                        eliminaTratta();
+                        break;
                     case 0:
                         continua = false;
                         System.out.println("Uscita dal programma. Arrivederci!");
@@ -168,6 +174,8 @@ public class MainUpdate {
             System.out.println("11. Visualizza biglietti,abbonamenti per un periodo");
             System.out.println("12. Visualizza biglietti,abbonamenti per punto emissione");
             System.out.println("13. Visualizza biglietti,abbonamenti per mezzo");
+            System.out.println("14. Crea tratta");
+            System.out.println("15. Gestisci tratta");
 
 
             System.out.println("0. Esci");
@@ -202,11 +210,13 @@ public class MainUpdate {
 //
 
 //          Selezione tratta
-            System.out.println("inverisci ID tratta tra quelli disponibili:");
+            System.out.println("inserisci nome tratta tra quelli disponibili:");
             System.out.println(trattaDAO.findAll());
-            Long idtratta = scanner.nextLong();
-            biglietto.setTratta(trattaDAO.findById(idtratta));
-            Mezzo trattaMezzo = trattaDAO.findById(idtratta).getMezzo();
+            scanner.nextLine();
+            String tratta = scanner.nextLine();
+            biglietto.setTratta(trattaDAO.getTrattaByName(tratta));
+
+            Mezzo trattaMezzo = trattaDAO.getTrattaByName(tratta).getMezzo();
             biglietto.setMezzo(trattaMezzo);
 
 
@@ -239,17 +249,19 @@ public class MainUpdate {
             Long idPunto = scanner.nextLong();
             abbonamento.setPuntoEmissione(puntoEmissioneDAO.findById(idPunto));
 
+            //          Selezione tratta
+            System.out.println("inverisci ID tratta tra quelli disponibili:");
+            System.out.println(trattaDAO.findAll());
+            String tratta = scanner.nextLine();
+            abbonamento.setTratta(trattaDAO.getTrattaByName(tratta));
+
 //          Selezione mezzo
             System.out.println("inverisci ID mezzo tra quelli disponibili:");
             visulizzaTuttiMezzi();
             Long idMezzo = scanner.nextLong();
             abbonamento.setMezzo(mezzoDAO.findById(idMezzo));
 
-//          Selezione tratta
-            System.out.println("inverisci ID tratta tra quelli disponibili:");
-            System.out.println(trattaDAO.findAll());
-            Long idtratta = scanner.nextLong();
-            abbonamento.setTratta(trattaDAO.findById(idtratta));
+
 
 
 //      Set data emissione e utente
@@ -285,11 +297,12 @@ public class MainUpdate {
             System.out.println("Mezzi disponibili: ");
             List<Mezzo> mezziDisponibili = mezzoDAO.findAll();
             mezziDisponibili.forEach(mezzo -> {
-                System.out.println("ID: " + mezzo.getId() + ", tipo: " + mezzo.getTipo() + ", stato: " + mezzo.getStato() + ", capienza: " + mezzo.getCapienza());
-            if (mezzo.getStato() == StatoMezzo.IN_MANUTENZIONE) {
-                System.out.print("In manutenzione da: " + mezzo.getDataInizio() + " fino a: " + mezzo.getDataFine() );
-            }
+                String msg = "ID: " + mezzo.getId() + ", tipo: " + mezzo.getTipo() + ", stato: " + mezzo.getStato() + ", capienza: " + mezzo.getCapienza();
 
+            if (mezzo.getStato() == StatoMezzo.MANUTENZIONE) {
+                System.out.println(msg + " In manutenzione da: " + mezzo.getDataInizio() + " fino a: " + mezzo.getDataFine() );
+            }
+                System.out.println(msg);
 
             });
 
@@ -297,11 +310,17 @@ public class MainUpdate {
         }
 
         public static void visulizzaTuttiTratte() {
-            System.out.println(trattaDAO.findAll());
+            List<Tratta> tratte = trattaDAO.findAll();
+            for (Tratta tratta : tratte) {
+                System.out.println(tratta);
+            }
         }
 
         public static void visulizzaTuttiPuntiVendita() {
-            System.out.println(puntoEmissioneDAO.findAll());
+            List<PuntoEmissione> punti = puntoEmissioneDAO.findAll();
+            for (PuntoEmissione punto : punti) {
+                System.out.println(punto);
+            }
         }
 
         public static void verificaAbbonamento() {
@@ -318,14 +337,20 @@ public class MainUpdate {
 
         public static void trovaBigliettiAttivi (){
         if(bigliettoDAO.findActive() != null){
-            System.out.println(bigliettoDAO.findActive());
+           List<Biglietto> biglietti = bigliettoDAO.findActive();
+            for (Biglietto biglietto : biglietti) {
+                System.out.println(biglietto);
+            }
         }
         else System.out.println("nulla");
 
         }
 
         public static void trovaBigliettiScaduti (){
-            System.out.println(bigliettoDAO.findExpired());
+            List<Biglietto> biglietti = bigliettoDAO.findExpired();
+            for (Biglietto biglietto : biglietti) {
+                System.out.println(biglietto);
+            }
         }
 
     public static void controlloMezzo() {
@@ -343,14 +368,13 @@ public class MainUpdate {
 
         System.out.println("Mezzo trovato:");
         System.out.println(mezzo);
-        System.out.println("Stato attuale: " + mezzo.getStato());
 
 
         System.out.println("Vuoi aggiornare lo stato del mezzo? (Sì: 1 / No: 0)");
         int scelta = scanner.nextInt();
 
         if (scelta == 1) {
-            System.out.println("Inserisci il nuovo stato del mezzo: (IN_SERVIZIO, IN_MANUTENZIONE)");
+            System.out.println("Inserisci il nuovo stato del mezzo: (SERVIZIO, MANUTENZIONE)");
             String nuovoStato = scanner.next().toUpperCase();
 
             try {
@@ -415,8 +439,8 @@ public class MainUpdate {
 
 
     public static void groupedByMezzo() {
-        List<PreSet> presets = preSetDAO.getOrderedByMezzo();
         System.out.println("Raggruppamento per Mezzo:");
+        List<PreSet> presets = preSetDAO.getOrderedByMezzo();
 
         Mezzo currentMezzo = null;
         for (PreSet preset : presets) {
@@ -426,7 +450,7 @@ public class MainUpdate {
                 currentMezzo = preset.getMezzo();
                 System.out.println("Mezzo: " + currentMezzo.getTipo() + " " + currentMezzo.getId());
             }
-            System.out.println("  - PreSet: " + preset.getId() + ", Tessera utente: " + preset.getTessera());
+            System.out.println(" - Ticket ID: " + preset.getId() + ", Tessera utente: " + preset.getTessera());
         }
 
 
@@ -460,5 +484,42 @@ public class MainUpdate {
         }
     }
 
+    public static void creaTratta() {
+        Tratta tratta = new Tratta();
+        System.out.println("Inserisci nome tratta");
+        scanner.nextLine();
+        tratta.setNome(scanner.nextLine());
+
+        System.out.println("Inserisci stazione di partenza");
+        tratta.setPartenza(scanner.next());
+
+
+        System.out.println("Inserisci stazione di arrivo");
+        tratta.setArrivo(scanner.next());
+
+
+        System.out.println("Seleziona mezzo per la tratta");
+        visulizzaTuttiMezzi();
+        Mezzo mezzo = mezzoDAO.findById(scanner.nextLong());
+        tratta.setMezzo(mezzo);
+
+        System.out.println("Inserisci durata");
+        tratta.setDurata(scanner.nextInt());
+
+        System.out.println("Tratta creata con successo!😁");
+        trattaDAO.save(tratta);
+    }
+
+    public static void eliminaTratta() {
+
+        System.out.println("Seleziona tratta da eliminare");
+        System.out.println(trattaDAO.findAll());
+        scanner.nextLine();
+        String tratta = scanner.nextLine();
+
+        trattaDAO.delete(trattaDAO.getTrattaByName(tratta));
+        System.out.println("Tratta eliminata con successo!👌");
+
+    }
 
 }

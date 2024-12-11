@@ -20,4 +20,8 @@ public class Abbonamento extends PreSet {
     @Column(name = "data_scadenza")
     private LocalDate dataScadenza;
 
+    @Override
+    public String toString() {
+        return "ID= " + getId() + " periodicita= " + periodicita + " dataScadenza=" + dataScadenza + "nome utente= " + getTessera().getClienteId().getNome() + " tessera ID= " + getTessera().getId();
+    }
 }

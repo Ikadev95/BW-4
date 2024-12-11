@@ -17,6 +17,9 @@ public class Tratta {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "nome")
+    private String nome;
+
     @Column(name = "partenza", nullable = false, length = 100)
     private String partenza;
 
@@ -33,4 +36,8 @@ public class Tratta {
     @JoinColumn(name = "mezzo_id")
     private Mezzo mezzo;
 
+    @Override
+    public String toString() {
+        return "ID= " + id + " nome= " + nome + " partenza= " + partenza + " arrivo= " + arrivo + " durata= " + durata + " " + mezzo + '\'';
+    }
 }
