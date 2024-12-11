@@ -23,7 +23,7 @@ public class Biglietto extends PreSet{
 
     @Override
     public String toString() {
-        return "ID= " + getId() + " validita= " + validita + "nome utente= " + getTessera().getClienteId().getNome() + " tessera ID= " + getTessera().getId();
+        return "ID= " + getId() + " validita= " + validita + " nome utente= " + getTessera().getClienteId().getNome() + " tessera ID= " + getTessera().getId();
     }
 }
 

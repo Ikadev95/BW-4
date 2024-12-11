@@ -7,7 +7,6 @@ import it.epicode.enums.TipoDiRuolo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -256,8 +255,9 @@ public class MainUpdate {
             abbonamento.setPuntoEmissione(puntoEmissioneDAO.findById(idPunto));
 
             //          Selezione tratta
-            System.out.println("inverisci ID tratta tra quelli disponibili:");
+            System.out.println("inverisci nome tratta tra quelli disponibili:");
             System.out.println(trattaDAO.findAll());
+            scanner.nextLine();
             String tratta = scanner.nextLine();
             abbonamento.setTratta(trattaDAO.getTrattaByName(tratta));
 
@@ -351,7 +351,7 @@ public class MainUpdate {
             if (LocalDate.now().isAfter(abbDaVerifica.getDataScadenza())) {
                 System.out.println("l'abbonamento è scaduto");
             } else {
-                System.out.println("abbonamento ancora in corso di validità");
+                System.out.println("abbonamento ancora in corso di validità: " );
             }
         }
         catch (Exception e) {
