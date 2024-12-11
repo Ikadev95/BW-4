@@ -9,6 +9,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
@@ -234,7 +235,12 @@ public class MainUpdate {
 
             em.merge(tesseraCor);
             System.out.println("Biglietto creato con sucesso.");
-        } catch (Exception e) {
+        }
+        catch (InputMismatchException e) {
+            System.out.println("Errore: Input non valido. Assicurati di inserire il dato corretto.");
+            scanner.nextLine();
+        }
+        catch (Exception e) {
             System.out.println("Errore durante la creazione del biglietto: " + e.getMessage());
         }
         }
@@ -262,8 +268,6 @@ public class MainUpdate {
             abbonamento.setMezzo(mezzoDAO.findById(idMezzo));
 
 
-
-
 //      Set data emissione e utente
             abbonamento.setDataEmissione(LocalDate.now());
             abbonamento.setTessera(utenteCor.getTessera());
@@ -288,237 +292,310 @@ public class MainUpdate {
             tesseraCor.getListaAbbonamenti().add(abbonamento);
             em.merge(tesseraCor);
             System.out.println("Abbonamento creato con successo.");
-        } catch (Exception e) {
+        }
+        catch (InputMismatchException e) {
+            System.out.println("Errore: Input non valido. Assicurati di inserire il dato corretto.");
+            scanner.nextLine();
+        }
+        catch (Exception e) {
             System.out.println("Errore durante la creazione dell'abbonamento." + e.getMessage());
         }
+
     }
 
         public static void visulizzaTuttiMezzi() {
+        try {
             System.out.println("Mezzi disponibili: ");
             List<Mezzo> mezziDisponibili = mezzoDAO.findAll();
             mezziDisponibili.forEach(mezzo -> {
                 String msg = "ID: " + mezzo.getId() + ", tipo: " + mezzo.getTipo() + ", stato: " + mezzo.getStato() + ", capienza: " + mezzo.getCapienza();
 
-            if (mezzo.getStato() == StatoMezzo.MANUTENZIONE) {
-                System.out.println(msg + " In manutenzione da: " + mezzo.getDataInizio() + " fino a: " + mezzo.getDataFine() );
-            }
+                if (mezzo.getStato() == StatoMezzo.MANUTENZIONE) {
+                    System.out.println(msg + " In manutenzione da: " + mezzo.getDataInizio() + " fino a: " + mezzo.getDataFine());
+                }
                 System.out.println(msg);
 
             });
-
-
+        } catch (Exception e) {
+            System.out.println("Errore durante l'operazione: " + e.getMessage());
+        }
         }
 
         public static void visulizzaTuttiTratte() {
+        try {
             List<Tratta> tratte = trattaDAO.findAll();
             for (Tratta tratta : tratte) {
                 System.out.println(tratta);
             }
+        } catch (Exception e) {
+            System.out.println("Errore durante l'operazione: " + e.getMessage());
+        }
         }
 
         public static void visulizzaTuttiPuntiVendita() {
+        try{
             List<PuntoEmissione> punti = puntoEmissioneDAO.findAll();
             for (PuntoEmissione punto : punti) {
                 System.out.println(punto);
             }
+        } catch (Exception e) {
+            System.out.println("Errore durante l'operazione: " + e.getMessage());
+        }
         }
 
         public static void verificaAbbonamento() {
+        try {
             System.out.println("inserici ID abbonamento");
             Abbonamento abbDaVerifica = abbonamentoDAO.findById(scanner.nextLong());
             if (LocalDate.now().isAfter(abbDaVerifica.getDataScadenza())) {
                 System.out.println("l'abbonamento è scaduto");
             } else {
-                System.out.println("abbonamento ancora in corso di validita");
-            }
-
-        }
-
-
-        public static void trovaBigliettiAttivi (){
-        if(bigliettoDAO.findActive() != null){
-           List<Biglietto> biglietti = bigliettoDAO.findActive();
-            for (Biglietto biglietto : biglietti) {
-                System.out.println(biglietto);
+                System.out.println("abbonamento ancora in corso di validità");
             }
         }
-        else System.out.println("nulla");
-
+        catch (Exception e) {
+            System.out.println("Errore durante l'operazione: " + e.getMessage());
+        }
         }
 
-        public static void trovaBigliettiScaduti (){
+
+    public static void trovaBigliettiAttivi() {
+        try {
+            List<Biglietto> biglietti = bigliettoDAO.findActive();
+            if (biglietti != null && !biglietti.isEmpty()) {
+                for (Biglietto biglietto : biglietti) {
+                    System.out.println(biglietto);
+                }
+            } else {
+                System.out.println("Errore: non ci sono biglietti attivi.");
+            }
+        } catch (Exception e) {
+            System.out.println("Errore durante l'operazione: " + e.getMessage());
+        }
+    }
+
+    public static void trovaBigliettiScaduti() {
+        try {
             List<Biglietto> biglietti = bigliettoDAO.findExpired();
-            for (Biglietto biglietto : biglietti) {
-                System.out.println(biglietto);
+            if (biglietti != null && !biglietti.isEmpty()) {
+                for (Biglietto biglietto : biglietti) {
+                    System.out.println(biglietto);
+                }
+            } else {
+                System.out.println("Errore: non ci sono biglietti scaduti.");
             }
         }
+        catch (Exception e) {
+            System.out.println("Errore durante l'operazione: " + e.getMessage());
+        }
+    }
 
     public static void controlloMezzo() {
-        System.out.println("Inserisci l'ID del mezzo da controllare:");
-        Long idMezzo = scanner.nextLong();
+        try {
+            System.out.println("Inserisci l'ID del mezzo da controllare:");
+            Long idMezzo = scanner.nextLong();
 
+            Mezzo mezzo = mezzoDAO.findById(idMezzo);
+            if (mezzo != null) {
+                System.out.println("Mezzo trovato:");
+                System.out.println(mezzo);
 
-        Mezzo mezzo = mezzoDAO.findById(idMezzo);
+                System.out.println("Vuoi aggiornare lo stato del mezzo? (Sì: 1 / No: 0)");
+                int scelta = scanner.nextInt();
+                scanner.nextLine();
 
-        if (mezzo == null) {
-            System.out.println("Errore: Nessun mezzo trovato con l'ID specificato.");
-            return;
-        }
+                if (scelta == 1) {
+                    System.out.println("Inserisci il nuovo stato del mezzo: (SERVIZIO, MANUTENZIONE)");
+                    String nuovoStato = scanner.nextLine().toUpperCase();
 
+                    try {
+                        StatoMezzo statoMezzo = StatoMezzo.valueOf(nuovoStato);
+                        mezzo.setStato(statoMezzo);
 
-        System.out.println("Mezzo trovato:");
-        System.out.println(mezzo);
-
-
-        System.out.println("Vuoi aggiornare lo stato del mezzo? (Sì: 1 / No: 0)");
-        int scelta = scanner.nextInt();
-
-        if (scelta == 1) {
-            System.out.println("Inserisci il nuovo stato del mezzo: (SERVIZIO, MANUTENZIONE)");
-            String nuovoStato = scanner.next().toUpperCase();
-
-            try {
-                StatoMezzo statoMezzo = StatoMezzo.valueOf(nuovoStato);
-                mezzo.setStato(statoMezzo);
-
-
-                mezzoDAO.update(mezzo);
-                System.out.println("Stato del mezzo aggiornato correttamente a: " + statoMezzo);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Errore: Stato non valido. Operazione annullata.");
+                        mezzoDAO.update(mezzo);
+                        System.out.println("Stato del mezzo aggiornato correttamente a: " + statoMezzo);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Errore: Stato non valido. Operazione annullata.");
+                    }
+                } else if (scelta == 0) {
+                    System.out.println("Nessuna modifica apportata al mezzo.");
+                } else {
+                    System.out.println("Scelta non valida. Nessuna modifica.");
+                }
+            } else {
+                System.out.println("Errore: Nessun mezzo trovato con l'ID specificato.");
             }
-        } else {
-            System.out.println("Nessuna modifica apportata al mezzo.");
+        } catch (InputMismatchException e) {
+            System.out.println("Errore: Input non valido. Assicurati di inserire il dato corretto.");
+            scanner.nextLine();
+        } catch (Exception e) {
+            System.out.println("Errore durante l'operazione: " + e.getMessage());
         }
     }
 
     public static void rinnovoTessera() {
-        System.out.println("Inserisci l'ID della tessera da rinnovare:");
-        Long idTessera = scanner.nextLong();
+        try{
+            System.out.println("Inserisci l'ID della tessera da rinnovare:");
+            Long idTessera = scanner.nextLong();
+            Tessera tessera = tesseraDAO.findById(idTessera);
 
-
-        Tessera tessera = tesseraDAO.findById(idTessera);
-
-        if (tessera == null) {
-            System.out.println("Errore: Nessuna tessera trovata con l'ID specificato.");
-            return;
-        }
-
-
-        System.out.println("Tessera trovata:");
-        System.out.println("Data di scadenza attuale: " + tessera.getDataScadenza());
-
-        if (tessera.getDataScadenza().isBefore(LocalDate.now())) {
-            System.out.println("La tessera è scaduta. È necessario rinnovarla. (Si: 1, No: 0 )");
-            int scelta = scanner.nextInt();
-        } else {
-            System.out.println("La tessera è ancora valida. Vuoi comunque rinnovarla? (Sì: 1 / No: 0)");
-            int scelta = scanner.nextInt();
-
-            if (scelta != 1) {
-                System.out.println("Operazione annullata.");
+            if (tessera == null) {
+                System.out.println("Errore: Nessuna tessera trovata con l'ID specificato.");
                 return;
             }
+
+            System.out.println("Tessera trovata:");
+            System.out.println("Data di scadenza attuale: " + tessera.getDataScadenza());
+
+            if (tessera.getDataScadenza().isBefore(LocalDate.now())) {
+                System.out.println("La tessera è scaduta. È necessario rinnovarla. (Si: 1, No: 0 )");
+                int scelta = scanner.nextInt();
+            } else {
+                System.out.println("La tessera è ancora valida. Vuoi comunque rinnovarla? (Sì: 1 / No: 0)");
+                int scelta = scanner.nextInt();
+
+                if (scelta != 1) {
+                    System.out.println("Operazione annullata.");
+                    return;
+                }
+            }
+            tessera.setDataScadenza(LocalDate.now().plusYears(2));
+            tesseraDAO.update(tessera);
+
+            System.out.println("Tessera rinnovata con successo! Nuova data di scadenza: " + tessera.getDataScadenza());
+        }
+        catch (InputMismatchException e) {
+            System.out.println("Errore: Input non valido. Assicurati di inserire il dato corretto.");
+            scanner.nextLine();
+        } catch (Exception e) {
+            System.out.println("Errore durante l'operazione: " + e.getMessage());
         }
 
-
-        tessera.setDataScadenza(LocalDate.now().plusYears(2));
-        tesseraDAO.update(tessera);
-
-        System.out.println("Tessera rinnovata con successo! Nuova data di scadenza: " + tessera.getDataScadenza());
     }
 
     public static void visualizzaBiglAbbPerPuntoDiEmissione() {
 
+        try{
         System.out.println("insersci ID del punto vendita");
         visulizzaTuttiPuntiVendita();
         int idPunto = scanner.nextInt();
         System.out.println(preSetDAO.getPreSetbyPunto(idPunto));
-
+        }
+        catch (InputMismatchException e) {
+            System.out.println("Errore: Input non valido. Assicurati di inserire il dato corretto.");
+            scanner.nextLine();
+        } catch (Exception e) {
+            System.out.println("Errore durante l'operazione: " + e.getMessage());
+        }
     }
 
 
     public static void groupedByMezzo() {
-        System.out.println("Raggruppamento per Mezzo:");
-        List<PreSet> presets = preSetDAO.getOrderedByMezzo();
+        try {
+            System.out.println("Raggruppamento per Mezzo:");
+            List<PreSet> presets = preSetDAO.getOrderedByMezzo();
 
-        Mezzo currentMezzo = null;
-        for (PreSet preset : presets) {
-            if (preset.getMezzo() == null) {
-                System.out.println("Mezzo non specificato:");
-            } else if (!preset.getMezzo().equals(currentMezzo)) {
-                currentMezzo = preset.getMezzo();
-                System.out.println("Mezzo: " + currentMezzo.getTipo() + " " + currentMezzo.getId());
+            Mezzo currentMezzo = null;
+            for (PreSet preset : presets) {
+                if (preset.getMezzo() == null) {
+                    System.out.println("Mezzo non specificato:");
+                } else if (!preset.getMezzo().equals(currentMezzo)) {
+                    currentMezzo = preset.getMezzo();
+                    System.out.println("Mezzo: " + currentMezzo.getTipo() + " " + currentMezzo.getId());
+                }
+                System.out.println(" - Ticket ID: " + preset.getId() + ", Tessera utente: " + preset.getTessera());
             }
-            System.out.println(" - Ticket ID: " + preset.getId() + ", Tessera utente: " + preset.getTessera());
         }
-
-
+        catch (Exception e) {
+            System.out.println("Errore durante l'operazione: " + e.getMessage());
+        }
 }
 
     public static void visualizzaPerPeriodo() {
-        System.out.println("Inserisci data di inizio: ");
-        LocalDate dataInizio = LocalDate.parse(scanner.next());
-        System.out.println("Inserisci data di fine: ");
-        LocalDate dataFine = LocalDate.parse(scanner.next());
+        try {
+            System.out.println("Inserisci data di inizio: ");
+            LocalDate dataInizio = LocalDate.parse(scanner.next());
+            System.out.println("Inserisci data di fine: ");
+            LocalDate dataFine = LocalDate.parse(scanner.next());
 
-        System.out.println("cosa vuoi visualizzare? (1.Biglietti, 2.Abbonamenti)");
-        int scelta = scanner.nextInt();
+            System.out.println("cosa vuoi visualizzare? (1.Biglietti, 2.Abbonamenti)");
+            int scelta = scanner.nextInt();
 
-        if (scelta == 1) {
-            List<Biglietto> biglietti = em.createQuery("SELECT b FROM Biglietto b WHERE b.dataEmissione BETWEEN :dataInizio AND :dataFine", Biglietto.class)
-                    .setParameter("dataInizio", dataInizio)
-                    .setParameter("dataFine", dataFine)
-                    .getResultList();
-            System.out.println("Biglietti trovati: ");
-            biglietti.forEach(System.out::println);
-        } else if (scelta==2) {
-            List<Abbonamento> abbonamenti = em.createQuery("SELECT a FROM Abbonamento a WHERE a.dataEmissione BETWEEN :dataInizio AND :dataFine", Abbonamento.class)
-                    .setParameter("dataInizio", dataInizio)
-                    .setParameter("dataFine", dataFine)
-                    .getResultList();
-            System.out.println("Abbonamenti trovati: ");
-            abbonamenti.forEach(System.out::println);
-        }else {
-            System.out.println("Scelta non valida.");
+            if (scelta == 1) {
+                List<Biglietto> biglietti = em.createQuery("SELECT b FROM Biglietto b WHERE b.dataEmissione BETWEEN :dataInizio AND :dataFine", Biglietto.class)
+                        .setParameter("dataInizio", dataInizio)
+                        .setParameter("dataFine", dataFine)
+                        .getResultList();
+                System.out.println("Biglietti trovati: ");
+                biglietti.forEach(System.out::println);
+            } else if (scelta == 2) {
+                List<Abbonamento> abbonamenti = em.createQuery("SELECT a FROM Abbonamento a WHERE a.dataEmissione BETWEEN :dataInizio AND :dataFine", Abbonamento.class)
+                        .setParameter("dataInizio", dataInizio)
+                        .setParameter("dataFine", dataFine)
+                        .getResultList();
+                System.out.println("Abbonamenti trovati: ");
+                abbonamenti.forEach(System.out::println);
+            } else {
+                System.out.println("Scelta non valida.");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Errore: Input non valido. Assicurati di inserire il dato corretto.");
+            scanner.nextLine();
+        } catch (Exception e) {
+            System.out.println("Errore durante l'operazione: " + e.getMessage());
         }
     }
 
     public static void creaTratta() {
-        Tratta tratta = new Tratta();
-        System.out.println("Inserisci nome tratta");
-        scanner.nextLine();
-        tratta.setNome(scanner.nextLine());
+        try {
+            Tratta tratta = new Tratta();
+            System.out.println("Inserisci nome tratta");
+            scanner.nextLine();
+            tratta.setNome(scanner.nextLine());
 
-        System.out.println("Inserisci stazione di partenza");
-        tratta.setPartenza(scanner.next());
-
-
-        System.out.println("Inserisci stazione di arrivo");
-        tratta.setArrivo(scanner.next());
+            System.out.println("Inserisci stazione di partenza");
+            tratta.setPartenza(scanner.next());
 
 
-        System.out.println("Seleziona mezzo per la tratta");
-        visulizzaTuttiMezzi();
-        Mezzo mezzo = mezzoDAO.findById(scanner.nextLong());
-        tratta.setMezzo(mezzo);
+            System.out.println("Inserisci stazione di arrivo");
+            tratta.setArrivo(scanner.next());
 
-        System.out.println("Inserisci durata");
-        tratta.setDurata(scanner.nextInt());
 
-        System.out.println("Tratta creata con successo!😁");
-        trattaDAO.save(tratta);
+            System.out.println("Seleziona mezzo per la tratta");
+            visulizzaTuttiMezzi();
+            Mezzo mezzo = mezzoDAO.findById(scanner.nextLong());
+            tratta.setMezzo(mezzo);
+
+            System.out.println("Inserisci durata");
+            tratta.setDurata(scanner.nextInt());
+
+            System.out.println("Tratta creata con successo!😁");
+            trattaDAO.save(tratta);
+        } catch (InputMismatchException e) {
+            System.out.println("Errore: Input non valido. Assicurati di inserire il dato corretto.");
+            scanner.nextLine();
+        } catch (Exception e) {
+            System.out.println("Errore durante l'operazione: " + e.getMessage());
+        }
     }
 
     public static void eliminaTratta() {
 
-        System.out.println("Seleziona tratta da eliminare");
-        System.out.println(trattaDAO.findAll());
-        scanner.nextLine();
-        String tratta = scanner.nextLine();
+        try {
+            System.out.println("Seleziona tratta da eliminare");
+            System.out.println(trattaDAO.findAll());
+            scanner.nextLine();
+            String tratta = scanner.nextLine();
 
-        trattaDAO.delete(trattaDAO.getTrattaByName(tratta));
-        System.out.println("Tratta eliminata con successo!👌");
+            trattaDAO.delete(trattaDAO.getTrattaByName(tratta));
+            System.out.println("Tratta eliminata con successo!👌");
+        }
+        catch (InputMismatchException e) {
+            System.out.println("Errore: Input non valido. Assicurati di inserire il dato corretto.");
+            scanner.nextLine();
+        } catch (Exception e) {
+            System.out.println("Errore durante l'operazione: " + e.getMessage());
+        }
 
     }
 
