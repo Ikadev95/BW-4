@@ -15,6 +15,7 @@ import java.util.UUID;
 @Entity
 @Data
 @NamedQuery( name = "Trova_tutto_Mezzo" , query = "SELECT p FROM Mezzo p")
+@NamedQuery(name ="Trova_tutti_Disponibili", query = "SELECT m FROM Mezzo m WHERE m.stato = SERVIZIO")
 public class Mezzo {
 
     @Id
@@ -30,7 +31,6 @@ public class Mezzo {
 
     @Column(name = "capienza", nullable = false)
     private int capienza;
-
 
     @Enumerated(EnumType.STRING)
     private TipoMezzo tipo;

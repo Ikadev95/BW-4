@@ -17,13 +17,11 @@ public class PuntoEmissione {
     @Column(name = "id")
     private Long id;
 
-
-
-
+    @Column(name = "nome")
+    private String nome;
 
     @Enumerated(EnumType.STRING)
     private TipoPuntoEmissione tipo;
-
 
      @OneToMany(mappedBy = "puntoEmissione", cascade = CascadeType.ALL)
      private List<Biglietto> biglietti;
@@ -33,7 +31,7 @@ public class PuntoEmissione {
 
     @Override
     public String toString() {
-        return "ID= " + id + "  tipo= " + tipo ;
+        return "ID = " + id + "  tipo = " + tipo + " nome = " + nome;
     }
 
 }

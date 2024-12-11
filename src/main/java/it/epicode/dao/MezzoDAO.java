@@ -37,5 +37,7 @@ public class MezzoDAO {
         em.getTransaction().commit();
     }
 
+    public  List<Mezzo> findAllAvailable(){return em.createNamedQuery("Trova_tutti_Disponibili", Mezzo.class).getResultList();}
+
 
 }

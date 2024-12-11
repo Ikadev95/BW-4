@@ -55,8 +55,7 @@ public class MainCreate {
 
             PuntoEmissione puntoEmissione = new PuntoEmissione();
             puntoEmissione.setTipo(faker.options().option(TipoPuntoEmissione.class));
-
-
+            puntoEmissione.setNome(faker.company().name());
             puntoEmissioneDAO.save(puntoEmissione);
 
         }
@@ -111,6 +110,39 @@ public class MainCreate {
         tratta6.setMezzo(mezzi.get(6)); // Associare il mezzo appropriato
         tratta6.setDurata(420);
         trattaDAO.save(tratta6);
+
+        Tratta tratta7 = new Tratta();
+        tratta7.setNome("roma milano");
+        tratta7.setPartenza("Roma");
+        tratta7.setArrivo("Milano");
+        tratta7.setMezzo(mezzi.get(0)); // Associare il mezzo appropriato
+        tratta7.setDurata(250); // Durata modificata
+        trattaDAO.save(tratta7);
+
+        Tratta tratta8 = new Tratta();
+        tratta8.setNome("napoli torino");
+        tratta8.setPartenza("Napoli");
+        tratta8.setArrivo("Torino");
+        tratta8.setMezzo(mezzi.get(1)); // Associare il mezzo appropriato
+        tratta8.setDurata(210); // Durata modificata
+        trattaDAO.save(tratta8);
+
+        Tratta tratta9 = new Tratta();
+        tratta9.setNome("venezia firenze");
+        tratta9.setPartenza("Venezia");
+        tratta9.setArrivo("Firenze");
+        tratta9.setMezzo(mezzi.get(3)); // Associare il mezzo appropriato
+        tratta9.setDurata(180); // Durata modificata
+        trattaDAO.save(tratta9);
+
+        Tratta tratta10 = new Tratta();
+        tratta10.setNome("genova bologna");
+        tratta10.setPartenza("Genova");
+        tratta10.setArrivo("Bologna");
+        tratta10.setMezzo(mezzi.get(4)); // Associare il mezzo appropriato
+        tratta10.setDurata(130); // Durata modificata
+        trattaDAO.save(tratta10);
+
 
 
         List<Utente> utenti = utenteDAO.findAll();

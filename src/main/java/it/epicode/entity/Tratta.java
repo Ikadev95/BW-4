@@ -26,7 +26,7 @@ public class Tratta {
     @Column(name = "arrivo", nullable = false, length = 100)
     private String arrivo;
 
-    @Column(name = "durata", nullable = false, length = 50)
+    @Column(name = "durata (minuti)", nullable = false, length = 50)
     private int durata;
 
     @OneToMany(mappedBy = "tratta", orphanRemoval = true)

@@ -11,13 +11,13 @@
             <property name="jakarta.persistence.jdbc.user" value="postgres"/>
             <!-- password del db-->
             
-            <property name="jakarta.persistence.jdbc.password" value="fricchio29"/>
+            <property name="jakarta.persistence.jdbc.password" value="fede"/>
 
 
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="hibernate.default_schema" value="public"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
         </properties>
     </persistence-unit>
 </persistence>
