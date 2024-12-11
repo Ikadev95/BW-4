@@ -12,13 +12,12 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 
 public class MainUpdate {
 
     static Scanner scanner = new Scanner(System.in);
-    private static final Logger LOGGER = LoggerFactory.getLogger(MainUpdate.class);
+   // private static final Logger LOGGER = LoggerFactory.getLogger(MainUpdate.class);
     static Utente utenteCor;
 
     static EntityManagerFactory emf = Persistence.createEntityManagerFactory("unit-jpa");
@@ -190,6 +189,8 @@ public class MainUpdate {
 
 
         public static void creaBiglietto() {
+
+        try {
             Biglietto biglietto = new Biglietto();
 
 //          Selezione punto vendita
@@ -198,17 +199,15 @@ public class MainUpdate {
             Long idPunto = scanner.nextLong();
             biglietto.setPuntoEmissione(puntoEmissioneDAO.findById(idPunto));
 
-//          Selezione mezzo
-            System.out.println("inverisci ID mezzo tra quelli disponibili:");
-            visulizzaTuttiMezzi();
-            Long idMezzo = scanner.nextLong();
-            biglietto.setMezzo(mezzoDAO.findById(idMezzo));
+//
 
 //          Selezione tratta
             System.out.println("inverisci ID tratta tra quelli disponibili:");
             System.out.println(trattaDAO.findAll());
             Long idtratta = scanner.nextLong();
             biglietto.setTratta(trattaDAO.findById(idtratta));
+            Mezzo trattaMezzo = trattaDAO.findById(idtratta).getMezzo();
+            biglietto.setMezzo(trattaMezzo);
 
 
 //          Set data emissione e utente
@@ -224,57 +223,77 @@ public class MainUpdate {
             tesseraCor.getListaBiglietti().add(biglietto);
 
             em.merge(tesseraCor);
+            System.out.println("Biglietto creato con sucesso.");
+        } catch (Exception e) {
+            System.out.println("Errore durante la creazione del biglietto: " + e.getMessage());
+        }
         }
 
     public static void creaAbbonamento() {
-        Abbonamento abbonamento = new Abbonamento();
+        try {
+            Abbonamento abbonamento = new Abbonamento();
 
 //          Selezione punto vendita
-        System.out.println("inserisci ID punto di emissione tra quelli disponibili:");
-        System.out.println(puntoEmissioneDAO.findAll());
-        Long idPunto = scanner.nextLong();
-        abbonamento.setPuntoEmissione(puntoEmissioneDAO.findById(idPunto));
+            System.out.println("inserisci ID punto di emissione tra quelli disponibili:");
+            System.out.println(puntoEmissioneDAO.findAll());
+            Long idPunto = scanner.nextLong();
+            abbonamento.setPuntoEmissione(puntoEmissioneDAO.findById(idPunto));
 
 //          Selezione mezzo
-        System.out.println("inverisci ID mezzo tra quelli disponibili:");
-        visulizzaTuttiMezzi();
-        Long idMezzo = scanner.nextLong();
-        abbonamento.setMezzo(mezzoDAO.findById(idMezzo));
+            System.out.println("inverisci ID mezzo tra quelli disponibili:");
+            visulizzaTuttiMezzi();
+            Long idMezzo = scanner.nextLong();
+            abbonamento.setMezzo(mezzoDAO.findById(idMezzo));
 
 //          Selezione tratta
-        System.out.println("inverisci ID tratta tra quelli disponibili:");
-        System.out.println(trattaDAO.findAll());
-        Long idtratta = scanner.nextLong();
-        abbonamento.setTratta(trattaDAO.findById(idtratta));
+            System.out.println("inverisci ID tratta tra quelli disponibili:");
+            System.out.println(trattaDAO.findAll());
+            Long idtratta = scanner.nextLong();
+            abbonamento.setTratta(trattaDAO.findById(idtratta));
 
 
 //      Set data emissione e utente
-        abbonamento.setDataEmissione(LocalDate.now());
-        abbonamento.setTessera(utenteCor.getTessera());
+            abbonamento.setDataEmissione(LocalDate.now());
+            abbonamento.setTessera(utenteCor.getTessera());
 
 //      Selezione periodicita
-        System.out.println("Inserisci periodicità: SETTIMANALE, MENSILE, SEMESTRALE");
-        Periodicita periodicita = Periodicita.valueOf(scanner.next().toUpperCase());
-        abbonamento.setPeriodicita(periodicita);
+            System.out.println("Inserisci periodicità: SETTIMANALE, MENSILE, SEMESTRALE");
+            Periodicita periodicita = Periodicita.valueOf(scanner.next().toUpperCase());
+            abbonamento.setPeriodicita(periodicita);
 
-        if (periodicita == Periodicita.SETTIMANALE) {
-            abbonamento.setDataScadenza(LocalDate.now().plusWeeks(1));
-        } else if (periodicita == Periodicita.MENSILE) {
-            abbonamento.setDataScadenza(LocalDate.now().plusMonths(1));
-        } else {
-            abbonamento.setDataScadenza(LocalDate.now().plusYears(1));
+            if (periodicita == Periodicita.SETTIMANALE) {
+                abbonamento.setDataScadenza(LocalDate.now().plusWeeks(1));
+            } else if (periodicita == Periodicita.MENSILE) {
+                abbonamento.setDataScadenza(LocalDate.now().plusMonths(1));
+            } else {
+                abbonamento.setDataScadenza(LocalDate.now().plusYears(1));
+            }
+
+
+            abbonamentoDAO.save(abbonamento);
+
+            Tessera tesseraCor = utenteCor.getTessera();
+            tesseraCor.getListaAbbonamenti().add(abbonamento);
+            em.merge(tesseraCor);
+            System.out.println("Abbonamento creato con successo.");
+        } catch (Exception e) {
+            System.out.println("Errore durante la creazione dell'abbonamento." + e.getMessage());
         }
-
-
-        abbonamentoDAO.save(abbonamento);
-
-        Tessera tesseraCor = utenteCor.getTessera();
-        tesseraCor.getListaAbbonamenti().add(abbonamento);
-        em.merge(tesseraCor);
     }
 
         public static void visulizzaTuttiMezzi() {
-            System.out.println(mezzoDAO.findAll());
+            System.out.println("Mezzi disponibili: ");
+            List<Mezzo> mezziDisponibili = mezzoDAO.findAll();
+            mezziDisponibili.forEach(mezzo -> {
+                System.out.println("ID: " + mezzo.getId() + ", tipo: " + mezzo.getTipo() + ", stato: " + mezzo.getStato() + ", capienza: " + mezzo.getCapienza());
+            if (mezzo.getStato() == StatoMezzo.IN_MANUTENZIONE) {
+                System.out.print("In manutenzione da: " + mezzo.getDataInizio() + " fino a: " + mezzo.getDataFine() );
+            }
+
+
+            });
+
+
         }
 
         public static void visulizzaTuttiTratte() {

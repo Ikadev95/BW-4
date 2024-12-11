@@ -5,6 +5,7 @@ import it.epicode.enums.TipoMezzo;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import javax.lang.model.element.Name;
 import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -35,6 +36,9 @@ public class Mezzo {
 
     @Column(name = "data_fine", nullable = false)
     private LocalDate dataFine;
+
+    @Column(name =  "num_manutenzioni", nullable = false)
+    private int NumManutenzioni;
 
     @OneToMany(mappedBy = "mezzo", orphanRemoval = true)
     private Set<Tratta> viaggiPerTratta = new LinkedHashSet<>();

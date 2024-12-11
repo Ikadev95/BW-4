@@ -42,13 +42,14 @@ public class MainCreate {
 
 
         for (int i = 0; i < 5; i++) {
+            LocalDate startDate =  LocalDate.now().minusMonths(faker.number().numberBetween(1, 4));
             Mezzo mezzo = new Mezzo();
             mezzo.setTipo(faker.options().option(TipoMezzo.class));
             mezzo.setCapienza(faker.number().numberBetween(15,50));
             mezzo.setStato(faker.options().option(StatoMezzo.class));
-            mezzo.setDataInizio(LocalDate.now().plusDays(faker.number().randomNumber()));
-            mezzo.setDataFine(LocalDate.now().plusDays(faker.number().randomNumber()));
-
+            mezzo.setDataInizio(startDate);
+            mezzo.setDataFine(startDate.plusMonths(faker.number().numberBetween(1, 4)));
+            mezzo.setNumManutenzioni(faker.number().numberBetween(1 , 3));
             mezzoDAO.save(mezzo);
 
             Tratta tratta = new Tratta();

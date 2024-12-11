@@ -11,7 +11,7 @@
             <property name="jakarta.persistence.jdbc.user" value="postgres"/>
             <!-- password del db-->
             
-            <property name="jakarta.persistence.jdbc.password" value="0000"/>
+            <property name="jakarta.persistence.jdbc.password" value="fricchio29"/>
 
 
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
