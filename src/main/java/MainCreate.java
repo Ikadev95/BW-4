@@ -57,7 +57,7 @@ public class MainCreate {
 
             PuntoEmissione puntoEmissione = new PuntoEmissione();
             puntoEmissione.setTipo(faker.options().option(TipoPuntoEmissione.class));
-            puntoEmissione.setDisponibile(faker.options().option(StatoMezzo.class));
+
 
             puntoEmissioneDAO.save(puntoEmissione);
 
