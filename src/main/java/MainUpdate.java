@@ -264,7 +264,8 @@ public class MainUpdate {
 //          Selezione mezzo
             System.out.println("inverisci ID mezzo tra quelli disponibili:");
             visulizzaTuttiMezzi();
-            Long idMezzo = scanner.nextLong();
+            scanner.nextLine();
+            String idMezzo = scanner.nextLine();
             abbonamento.setMezzo(mezzoDAO.findById(idMezzo));
 
 
@@ -393,7 +394,8 @@ public class MainUpdate {
     public static void controlloMezzo() {
         try {
             System.out.println("Inserisci l'ID del mezzo da controllare:");
-            Long idMezzo = scanner.nextLong();
+            scanner.nextLine();
+            String idMezzo = scanner.nextLine();
 
             Mezzo mezzo = mezzoDAO.findById(idMezzo);
             if (mezzo != null) {
@@ -436,7 +438,8 @@ public class MainUpdate {
     public static void rinnovoTessera() {
         try{
             System.out.println("Inserisci l'ID della tessera da rinnovare:");
-            Long idTessera = scanner.nextLong();
+            scanner.nextLine();
+            String idTessera = scanner.nextLine();
             Tessera tessera = tesseraDAO.findById(idTessera);
 
             if (tessera == null) {
@@ -563,7 +566,7 @@ public class MainUpdate {
 
             System.out.println("Seleziona mezzo per la tratta");
             visulizzaTuttiMezzi();
-            Mezzo mezzo = mezzoDAO.findById(scanner.nextLong());
+            Mezzo mezzo = mezzoDAO.findById(scanner.nextLine());
             tratta.setMezzo(mezzo);
 
             System.out.println("Inserisci durata");

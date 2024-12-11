@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 
 @Getter
@@ -19,9 +20,17 @@ import java.util.List;
 @Entity
 @Table(name = "tessera")
 public class Tessera {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    @Column(name = "id")
+    private String id;
+
+    @PrePersist
+    public void generateId() {
+        if (id == null) {
+            this.id = UUID.randomUUID().toString();
+        }
+    }
 
     @OneToOne
     @JoinColumn(name = "cliente_id", nullable = false)

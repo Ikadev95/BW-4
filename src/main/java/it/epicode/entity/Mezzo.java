@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -17,9 +18,15 @@ import java.util.Set;
 public class Mezzo {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
-    private Long id;
+    private String id;
+
+    @PrePersist
+    public void generateId() {
+        if (id == null) {
+            this.id = UUID.randomUUID().toString().substring(0, 5);
+        }
+    }
 
     @Column(name = "capienza", nullable = false)
     private int capienza;

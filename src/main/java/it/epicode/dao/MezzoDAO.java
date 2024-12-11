@@ -17,7 +17,7 @@ public class MezzoDAO {
         em.getTransaction().commit();
     }
 
-    public Mezzo findById(Long id) {
+    public Mezzo findById(String id) {
         return em.find(Mezzo.class, id);
     }
 

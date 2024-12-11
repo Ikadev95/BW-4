@@ -26,7 +26,7 @@ public class TesseraDAO {
         em.merge(utente);
     }
 
-    public Tessera findById(Long id) {
+    public Tessera findById(String id) {
         return em.find(Tessera.class, id);
     }
 
@@ -47,7 +47,7 @@ public class TesseraDAO {
     }
 
 
-    public Tessera findTesseraByUtenteId(Long utenteId) {
+    public Tessera findTesseraByUtenteId(String utenteId) {
         return em.createQuery("SELECT t FROM Tessera t WHERE t.clienteId.id = :utenteId", Tessera.class)
                 .setParameter("utenteId", utenteId)
                 .getSingleResult();
