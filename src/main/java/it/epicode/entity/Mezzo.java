@@ -48,7 +48,7 @@ public class Mezzo {
     private int NumManutenzioni;
 
     @OneToMany(mappedBy = "mezzo", orphanRemoval = true)
-    private Set<Tratta> viaggiPerTratta = new LinkedHashSet<>();
+    private Set<ConteggioTratta> viaggiPerTratta = new LinkedHashSet<>();
 
     @OneToMany(mappedBy = "mezzo", cascade = CascadeType.ALL)
     private List<Biglietto> biglietti;

@@ -25,6 +25,7 @@ public class MainCreate {
         PreSetDAO preSetDAO = new PreSetDAO(em);
         UtenteDAO utenteDAO = new UtenteDAO(em);
         TesseraDAO tesseraDAO = new TesseraDAO(em);
+        ConteggioTrattaDAO conteggioTrattaDAO = new ConteggioTrattaDAO(em);
 
         for (int i = 0; i < 5; i++) {
             Utente utente = new Utente();
@@ -62,87 +63,83 @@ public class MainCreate {
 
         List<Mezzo> mezzi = mezzoDAO.findAll();
 
+// Prima tratta
+        Tratta trattaBuild1 = new Tratta();
+        trattaBuild1.setNome("roma milano");
+        trattaBuild1.setPartenza("Roma");
+        trattaBuild1.setArrivo("Milano");
+        trattaDAO.save(trattaBuild1);
 
-        Tratta tratta1 = new Tratta();
-        tratta1.setNome("roma milano");
-        tratta1.setPartenza("Roma");
-        tratta1.setArrivo("Milano");
-        tratta1.setMezzo(mezzi.get(0)); // Associare il mezzo appropriato
-        tratta1.setDurata(180);
-        trattaDAO.save(tratta1);
+        ConteggioTratta trattaConteggio1 = new ConteggioTratta();
+        trattaConteggio1.setMezzo(mezzi.get(0)); // Mezzo 1
+        trattaConteggio1.setDurata(180);
+        trattaConteggio1.setTratta(trattaBuild1);
+        conteggioTrattaDAO.save(trattaConteggio1);
 
-        Tratta tratta2 = new Tratta();
-        tratta2.setNome("napoli torino");
-        tratta2.setPartenza("Napoli");
-        tratta2.setArrivo("Torino");
-        tratta2.setMezzo(mezzi.get(1)); // Associare il mezzo appropriato
-        tratta2.setDurata(240);
-        trattaDAO.save(tratta2);
+// Seconda tratta
+        Tratta trattaBuild2 = new Tratta();
+        trattaBuild2.setNome("napoli torino");
+        trattaBuild2.setPartenza("Napoli");
+        trattaBuild2.setArrivo("Torino");
+        trattaDAO.save(trattaBuild2);
 
-        Tratta tratta3 = new Tratta();
-        tratta3.setNome("venezia firenze");
-        tratta3.setPartenza("Venezia");
-        tratta3.setArrivo("Firenze");
-        tratta3.setMezzo(mezzi.get(3)); // Associare il mezzo appropriato
-        tratta3.setDurata(150);
-        trattaDAO.save(tratta3);
+        ConteggioTratta trattaConteggio2 = new ConteggioTratta();
+        trattaConteggio2.setMezzo(mezzi.get(1)); // Mezzo 2
+        trattaConteggio2.setDurata(240);
+        trattaConteggio2.setTratta(trattaBuild2);
+        conteggioTrattaDAO.save(trattaConteggio2);
 
-        Tratta tratta4 = new Tratta();
-        tratta4.setNome("genova bologna");
-        tratta4.setPartenza("Genova");
-        tratta4.setArrivo("Bologna");
-        tratta4.setMezzo(mezzi.get(4)); // Associare il mezzo appropriato
-        tratta4.setDurata(120);
-        trattaDAO.save(tratta4);
+// Terza tratta
+        Tratta trattaBuild3 = new Tratta();
+        trattaBuild3.setNome("genova bologna");
+        trattaBuild3.setPartenza("Genova");
+        trattaBuild3.setArrivo("Bologna");
+        trattaDAO.save(trattaBuild3);
 
-        Tratta tratta5 = new Tratta();
-        tratta5.setNome("cagliari palermo");
-        tratta5.setPartenza("Cagliari");
-        tratta5.setArrivo("Palermo");
-        tratta5.setMezzo(mezzi.get(5)); // Associare il mezzo appropriato
-        tratta5.setDurata(300);
-        trattaDAO.save(tratta5);
+        ConteggioTratta trattaConteggio3 = new ConteggioTratta();
+        trattaConteggio3.setMezzo(mezzi.get(2)); // Mezzo 3
+        trattaConteggio3.setDurata(120);
+        trattaConteggio3.setTratta(trattaBuild3);
+        conteggioTrattaDAO.save(trattaConteggio3);
 
-        Tratta tratta6 = new Tratta();
-        tratta6.setNome("trieste bari");
-        tratta6.setPartenza("Trieste");
-        tratta6.setArrivo("Bari");
-        tratta6.setMezzo(mezzi.get(6)); // Associare il mezzo appropriato
-        tratta6.setDurata(420);
-        trattaDAO.save(tratta6);
+// Quarta tratta
+        Tratta trattaBuild4 = new Tratta();
+        trattaBuild4.setNome("cagliari palermo");
+        trattaBuild4.setPartenza("Cagliari");
+        trattaBuild4.setArrivo("Palermo");
+        trattaDAO.save(trattaBuild4);
 
-        Tratta tratta7 = new Tratta();
-        tratta7.setNome("roma milano");
-        tratta7.setPartenza("Roma");
-        tratta7.setArrivo("Milano");
-        tratta7.setMezzo(mezzi.get(0)); // Associare il mezzo appropriato
-        tratta7.setDurata(250); // Durata modificata
-        trattaDAO.save(tratta7);
+        ConteggioTratta trattaConteggio4 = new ConteggioTratta();
+        trattaConteggio4.setMezzo(mezzi.get(3)); // Mezzo 4
+        trattaConteggio4.setDurata(300);
+        trattaConteggio4.setTratta(trattaBuild4);
+        conteggioTrattaDAO.save(trattaConteggio4);
 
-        Tratta tratta8 = new Tratta();
-        tratta8.setNome("napoli torino");
-        tratta8.setPartenza("Napoli");
-        tratta8.setArrivo("Torino");
-        tratta8.setMezzo(mezzi.get(1)); // Associare il mezzo appropriato
-        tratta8.setDurata(210); // Durata modificata
-        trattaDAO.save(tratta8);
+// Quinta tratta
+        Tratta trattaBuild5 = new Tratta();
+        trattaBuild5.setNome("venezia firenze");
+        trattaBuild5.setPartenza("Venezia");
+        trattaBuild5.setArrivo("Firenze");
+        trattaDAO.save(trattaBuild5);
 
-        Tratta tratta9 = new Tratta();
-        tratta9.setNome("venezia firenze");
-        tratta9.setPartenza("Venezia");
-        tratta9.setArrivo("Firenze");
-        tratta9.setMezzo(mezzi.get(3)); // Associare il mezzo appropriato
-        tratta9.setDurata(180); // Durata modificata
-        trattaDAO.save(tratta9);
+        ConteggioTratta trattaConteggio5 = new ConteggioTratta();
+        trattaConteggio5.setMezzo(mezzi.get(4)); // Mezzo 5
+        trattaConteggio5.setDurata(150);
+        trattaConteggio5.setTratta(trattaBuild5);
+        conteggioTrattaDAO.save(trattaConteggio5);
 
-        Tratta tratta10 = new Tratta();
-        tratta10.setNome("genova bologna");
-        tratta10.setPartenza("Genova");
-        tratta10.setArrivo("Bologna");
-        tratta10.setMezzo(mezzi.get(4)); // Associare il mezzo appropriato
-        tratta10.setDurata(130); // Durata modificata
-        trattaDAO.save(tratta10);
+// Sesta tratta
+        Tratta trattaBuild6 = new Tratta();
+        trattaBuild6.setNome("trieste bari");
+        trattaBuild6.setPartenza("Trieste");
+        trattaBuild6.setArrivo("Bari");
+        trattaDAO.save(trattaBuild6);
 
+        ConteggioTratta trattaConteggio6 = new ConteggioTratta();
+        trattaConteggio6.setMezzo(mezzi.get(5)); // Mezzo 6
+        trattaConteggio6.setDurata(420);
+        trattaConteggio6.setTratta(trattaBuild6);
+        conteggioTrattaDAO.save(trattaConteggio6);
 
 
         List<Utente> utenti = utenteDAO.findAll();

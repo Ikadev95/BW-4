@@ -9,7 +9,7 @@ import java.util.Set;
 
 @Entity
 @Data
-@NamedQuery( name = "Trova_tutto_Tratta" , query = "SELECT p FROM Tratta p")
+@NamedQuery( name = "Trova_tutto_Tratta" , query = "SELECT t FROM Tratta t WHERE t.nome IN (SELECT DISTINCT t2.nome FROM Tratta t2)")
 public class Tratta {
 
     @Id
@@ -26,18 +26,12 @@ public class Tratta {
     @Column(name = "arrivo", nullable = false, length = 100)
     private String arrivo;
 
-    @Column(name = "durata (minuti)", nullable = false, length = 50)
-    private int durata;
-
     @OneToMany(mappedBy = "tratta", orphanRemoval = true)
     private Set<PreSet> preSets = new LinkedHashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "mezzo_id")
-    private Mezzo mezzo;
 
     @Override
     public String toString() {
-        return "ID= " + id + " nome= " + nome + " partenza= " + partenza + " arrivo= " + arrivo + " durata= " + durata + " " + mezzo + '\'';
+        return "ID= " + id + " nome= " + nome + " partenza= " + partenza + " arrivo= " + arrivo ;
     }
 }

@@ -220,8 +220,11 @@ public class MainUpdate {
             String tratta = scanner.nextLine();
             biglietto.setTratta(trattaDAO.getTrattaByName(tratta));
 
-            Mezzo trattaMezzo = trattaDAO.getTrattaByName(tratta).getMezzo();
-            biglietto.setMezzo(trattaMezzo);
+            //qui l'utente sceglie il mezzo e lo associa
+            List<Mezzo> mezzi = mezzoDAO.findAllAvailable();
+            mezzi.forEach(System.out::println);
+            String idMezzo = scanner.nextLine();
+            biglietto.setMezzo(mezzoDAO.findById(idMezzo));
 
 
 //          Set data emissione e utente
@@ -584,18 +587,8 @@ public class MainUpdate {
             System.out.println("Inserisci stazione di partenza");
             tratta.setPartenza(scanner.next());
 
-
             System.out.println("Inserisci stazione di arrivo");
             tratta.setArrivo(scanner.next());
-
-
-            System.out.println("Seleziona mezzo per la tratta");
-            visulizzaTuttiMezziDisponibili();
-            Mezzo mezzo = mezzoDAO.findById(scanner.nextLine());
-            tratta.setMezzo(mezzo);
-
-            System.out.println("Inserisci durata in minuti");
-            tratta.setDurata(scanner.nextInt());
 
             System.out.println("Tratta creata con successo!😁");
             trattaDAO.save(tratta);
