@@ -12,10 +12,13 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MainUpdate {
 
     static Scanner scanner = new Scanner(System.in);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MainUpdate.class);
     static Utente utenteCor;
 
     static EntityManagerFactory emf = Persistence.createEntityManagerFactory("unit-jpa");
