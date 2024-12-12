@@ -37,5 +37,9 @@ public class ConteggioTrattaDAO {
         em.getTransaction().commit();
     }
 
+    public List<Object[]> findDurataMediaPerTratta() {
+        return em.createNamedQuery("Durata_tratta_media", Object[].class).getResultList();
+    }
+
 
 }

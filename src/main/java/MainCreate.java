@@ -70,11 +70,6 @@ public class MainCreate {
         trattaBuild1.setArrivo("Milano");
         trattaDAO.save(trattaBuild1);
 
-        ConteggioTratta trattaConteggio1 = new ConteggioTratta();
-        trattaConteggio1.setMezzo(mezzi.get(0)); // Mezzo 1
-        trattaConteggio1.setDurata(180);
-        trattaConteggio1.setTratta(trattaBuild1);
-        conteggioTrattaDAO.save(trattaConteggio1);
 
 // Seconda tratta
         Tratta trattaBuild2 = new Tratta();
@@ -83,11 +78,6 @@ public class MainCreate {
         trattaBuild2.setArrivo("Torino");
         trattaDAO.save(trattaBuild2);
 
-        ConteggioTratta trattaConteggio2 = new ConteggioTratta();
-        trattaConteggio2.setMezzo(mezzi.get(1)); // Mezzo 2
-        trattaConteggio2.setDurata(240);
-        trattaConteggio2.setTratta(trattaBuild2);
-        conteggioTrattaDAO.save(trattaConteggio2);
 
 // Terza tratta
         Tratta trattaBuild3 = new Tratta();
@@ -96,11 +86,6 @@ public class MainCreate {
         trattaBuild3.setArrivo("Bologna");
         trattaDAO.save(trattaBuild3);
 
-        ConteggioTratta trattaConteggio3 = new ConteggioTratta();
-        trattaConteggio3.setMezzo(mezzi.get(2)); // Mezzo 3
-        trattaConteggio3.setDurata(120);
-        trattaConteggio3.setTratta(trattaBuild3);
-        conteggioTrattaDAO.save(trattaConteggio3);
 
 // Quarta tratta
         Tratta trattaBuild4 = new Tratta();
@@ -109,11 +94,6 @@ public class MainCreate {
         trattaBuild4.setArrivo("Palermo");
         trattaDAO.save(trattaBuild4);
 
-        ConteggioTratta trattaConteggio4 = new ConteggioTratta();
-        trattaConteggio4.setMezzo(mezzi.get(3)); // Mezzo 4
-        trattaConteggio4.setDurata(300);
-        trattaConteggio4.setTratta(trattaBuild4);
-        conteggioTrattaDAO.save(trattaConteggio4);
 
 // Quinta tratta
         Tratta trattaBuild5 = new Tratta();
@@ -122,11 +102,6 @@ public class MainCreate {
         trattaBuild5.setArrivo("Firenze");
         trattaDAO.save(trattaBuild5);
 
-        ConteggioTratta trattaConteggio5 = new ConteggioTratta();
-        trattaConteggio5.setMezzo(mezzi.get(4)); // Mezzo 5
-        trattaConteggio5.setDurata(150);
-        trattaConteggio5.setTratta(trattaBuild5);
-        conteggioTrattaDAO.save(trattaConteggio5);
 
 // Sesta tratta
         Tratta trattaBuild6 = new Tratta();
@@ -134,12 +109,6 @@ public class MainCreate {
         trattaBuild6.setPartenza("Trieste");
         trattaBuild6.setArrivo("Bari");
         trattaDAO.save(trattaBuild6);
-
-        ConteggioTratta trattaConteggio6 = new ConteggioTratta();
-        trattaConteggio6.setMezzo(mezzi.get(5)); // Mezzo 6
-        trattaConteggio6.setDurata(420);
-        trattaConteggio6.setTratta(trattaBuild6);
-        conteggioTrattaDAO.save(trattaConteggio6);
 
 
         List<Utente> utenti = utenteDAO.findAll();
@@ -155,6 +124,7 @@ public class MainCreate {
             abbonamento.setPeriodicita(faker.options().option(Periodicita.class));
             abbonamento.setTessera(u.getTessera());
 
+
             if (!puntiEmissione.isEmpty()) {
                 abbonamento.setPuntoEmissione(faker.options().nextElement(puntiEmissione));
             }
@@ -165,7 +135,8 @@ public class MainCreate {
             }
 
             if (!tratte.isEmpty()) {
-                abbonamento.setTratta(faker.options().nextElement(tratte));
+                Tratta tratta = faker.options().nextElement(tratte);
+                abbonamento.setTratta(tratta);
             }
 
             abbonamentoDAO.save(abbonamento);

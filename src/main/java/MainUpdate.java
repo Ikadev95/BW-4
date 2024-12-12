@@ -29,6 +29,7 @@ public class MainUpdate {
     static PuntoEmissioneDAO puntoEmissioneDAO = new PuntoEmissioneDAO(em);
     static TesseraDAO tesseraDAO = new TesseraDAO(em);
     static PreSetDAO preSetDAO = new PreSetDAO(em);
+    static ConteggioTrattaDAO conteggioTrattaDAO = new ConteggioTrattaDAO(em);
 
     public static void main(String[] args) {
         Faker faker = new Faker(new Locale("it"));
@@ -144,6 +145,9 @@ public class MainUpdate {
                     case 15:
                         eliminaTratta();
                         break;
+                    case 16:
+                        conteggioDurataPerTratta();
+                        break;
                     case 0:
                         continua = false;
                         System.out.println("Uscita dal programma. Arrivederci!");
@@ -176,7 +180,7 @@ public class MainUpdate {
             System.out.println("13. Visualizza biglietti,abbonamenti per mezzo");
             System.out.println("14. Crea tratta");
             System.out.println("15. Elimina tratta");
-
+            System.out.println("16. Conteggio durata medio per tratta");
 
             System.out.println("0. Esci");
         }
@@ -619,6 +623,16 @@ public class MainUpdate {
             System.out.println("Errore durante l'operazione: " + e.getMessage());
         }
 
+    }
+
+    public static void conteggioDurataPerTratta(){
+        List<Object[]> risultati = conteggioTrattaDAO.findDurataMediaPerTratta();
+        for (Object[] riga : risultati) {
+            Tratta tratta = (Tratta) riga[0];
+            Mezzo mezzo = (Mezzo) riga[1];
+            Double durataMedia = (Double) riga[2];
+            System.out.println("Tratta: " + tratta.getNome() + ", Mezzo: " + mezzo.getId() + ", Durata Media: " + durataMedia);
+        }
     }
 
 }

@@ -1,20 +1,30 @@
 package it.epicode.dao;
 
 import it.epicode.entity.Biglietto;
+import it.epicode.entity.ConteggioTratta;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityManager;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
+import java.util.Random;
 
 @AllArgsConstructor
 public class BigliettoDAO {
     private EntityManager em;
 
     public void save(Biglietto oggetto) {
+        ConteggioTrattaDAO conteggioTrattaDAO = new ConteggioTrattaDAO(em);
         em.getTransaction().begin();
         em.persist(oggetto);
         em.getTransaction().commit();
+        ConteggioTratta conteggioTratta = new ConteggioTratta();
+        conteggioTratta.setTratta(oggetto.getTratta());
+        conteggioTratta.setMezzo(oggetto.getMezzo());
+        Random random = new Random();
+        int randomNumber = random.nextInt(371) + 30;
+        conteggioTratta.setDurata(randomNumber);
+        conteggioTrattaDAO.save(conteggioTratta);
     }
 
     public Biglietto findById(Long id) {
