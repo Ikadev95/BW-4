@@ -148,6 +148,9 @@ public class MainUpdate {
                     case 16:
                         conteggioDurataPerTratta();
                         break;
+                    case 17:
+                        conteggioTratte();
+                        break;
                     case 0:
                         continua = false;
                         System.out.println("Uscita dal programma. Arrivederci!");
@@ -181,6 +184,7 @@ public class MainUpdate {
             System.out.println("14. Crea tratta");
             System.out.println("15. Elimina tratta");
             System.out.println("16. Conteggio durata medio per tratta");
+            System.out.println("17. Conteggio tratte");
 
             System.out.println("0. Esci");
         }
@@ -632,6 +636,16 @@ public class MainUpdate {
             Mezzo mezzo = (Mezzo) riga[1];
             Double durataMedia = (Double) riga[2];
             System.out.println("Tratta: " + tratta.getNome() + ", Mezzo: " + mezzo.getId() + ", Durata Media: " + durataMedia);
+        }
+    }
+
+    public static void conteggioTratte(){
+        List<Object[]> risultati = conteggioTrattaDAO.CountTrattaPerMezzo();
+        for (Object[] riga : risultati) {
+            Tratta tratta = (Tratta) riga[0];
+            Mezzo mezzo = (Mezzo) riga[1];
+            Long count  = (Long) riga[2];
+            System.out.println("Tratta: " + tratta.getNome() + ", Mezzo: " + mezzo.getId() + ", Corse effettuate: " + count);
         }
     }
 

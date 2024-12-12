@@ -7,6 +7,7 @@ import lombok.Data;
 @Entity
 @NamedQuery(name = "Trova_tutto_ConteggioTratta", query = "SELECT a FROM ConteggioTratta a")
 @NamedQuery(name ="Durata_tratta_media", query = "SELECT ct.tratta, ct.mezzo, AVG(ct.durata) as durata_media FROM ConteggioTratta ct GROUP BY ct.tratta, ct.mezzo")
+@NamedQuery(name = "Conta_Tratte", query = "SELECT ct.tratta, ct.mezzo, COUNT(ct) as corse FROM ConteggioTratta ct GROUP BY ct.tratta, ct.mezzo")
 public class ConteggioTratta {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

@@ -41,5 +41,9 @@ public class ConteggioTrattaDAO {
         return em.createNamedQuery("Durata_tratta_media", Object[].class).getResultList();
     }
 
+    public List<Object[]> CountTrattaPerMezzo(){
+        return em.createNamedQuery("Conta_Tratte", Object[].class).getResultList();
+    }
+
 
 }
