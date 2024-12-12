@@ -385,9 +385,9 @@ public class MainUpdate {
             System.out.println("inserici ID abbonamento");
             Abbonamento abbDaVerifica = abbonamentoDAO.findById(scanner.nextLong());
             if (LocalDate.now().isAfter(abbDaVerifica.getDataScadenza())) {
-                System.out.println("l'abbonamento è scaduto");
+                System.out.println("l'abbonamento " + abbDaVerifica.getTratta().getNome() + " è scaduto");
             } else {
-                System.out.println("abbonamento ancora in corso di validità " );
+                System.out.println("abbonamento "+ abbDaVerifica.getTratta().getNome() + " è ancora in corso di validità" );
             }
         }
         catch (Exception e) {
@@ -630,22 +630,31 @@ public class MainUpdate {
     }
 
     public static void conteggioDurataPerTratta(){
-        List<Object[]> risultati = conteggioTrattaDAO.findDurataMediaPerTratta();
-        for (Object[] riga : risultati) {
-            Tratta tratta = (Tratta) riga[0];
-            Mezzo mezzo = (Mezzo) riga[1];
-            Double durataMedia = (Double) riga[2];
-            System.out.println("Tratta: " + tratta.getNome() + ", Mezzo: " + mezzo.getId() + ", Durata Media: " + durataMedia);
+        try {
+            List<Object[]> risultati = conteggioTrattaDAO.findDurataMediaPerTratta();
+            for (Object[] riga : risultati) {
+                Tratta tratta = (Tratta) riga[0];
+                Mezzo mezzo = (Mezzo) riga[1];
+                Double durataMedia = (Double) riga[2];
+                System.out.println("Tratta: " + tratta.getNome() + ", Mezzo: " + mezzo.getId() + ", Durata Media: " + durataMedia);
+            }
+        } catch (Exception e) {
+            System.out.println("Errore durante l'operazione: " + e.getMessage());
         }
+
     }
 
     public static void conteggioTratte(){
-        List<Object[]> risultati = conteggioTrattaDAO.CountTrattaPerMezzo();
-        for (Object[] riga : risultati) {
-            Tratta tratta = (Tratta) riga[0];
-            Mezzo mezzo = (Mezzo) riga[1];
-            Long count  = (Long) riga[2];
-            System.out.println("Tratta: " + tratta.getNome() + ", Mezzo: " + mezzo.getId() + ", Corse effettuate: " + count);
+        try {
+            List<Object[]> risultati = conteggioTrattaDAO.CountTrattaPerMezzo();
+            for (Object[] riga : risultati) {
+                Tratta tratta = (Tratta) riga[0];
+                Mezzo mezzo = (Mezzo) riga[1];
+                Long count  = (Long) riga[2];
+                System.out.println("Tratta: " + tratta.getNome() + ", Mezzo: " + mezzo.getId() + ", Corse effettuate: " + count);
+            }
+        } catch (Exception e) {
+            System.out.println("Errore durante l'operazione: " + e.getMessage());
         }
     }
 
